@@ -1,13 +1,11 @@
 <!doctype html>
 <html lang="es">
-<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pérdida del Alma</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&family=IBM+Plex+Mono:wght@500&display=swap">
-<meta name="description" content="Pérdida del alma: fashion film en una ciudad de hormigón y niebla. Trabajo de fin de grado.">
 <style>
 /* Maqueta: los colores de lo que ya está hecho en Blender, ComfyUI y Wan. Niebla verde azulada, hormigón húmedo casi negro,
    neón cian de las luces de la ciudad y el blanco y negro de los monitores de Control. Rótulos monumentales, cuerpo a máquina, cian solo como señal. */
@@ -156,6 +154,23 @@ td.esc{font:400 22px var(--mono);text-transform:uppercase;color:var(--rojo)}
 .ficha{list-style:none;margin:0 0 24px;padding:0;display:grid}
 .ficha li{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:12px;border-bottom:1px solid var(--junta);padding:9px 0}
 .ficha li b{font:500 11px var(--dato);letter-spacing:.12em;text-transform:uppercase;color:var(--ceniza)}
+/* formulario de casting: campos como fichas de hormigón, el foco se enciende en cian */
+.inscripcion{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px;margin:6px 0 18px;max-width:720px}
+.inscripcion label{display:grid;gap:6px;background:var(--hormigon);padding:14px 16px 12px;grid-column:1/-1;border-bottom:2px solid var(--junta);transition:border-color .3s}
+.inscripcion label.corto{grid-column:auto}
+.inscripcion label:focus-within{border-bottom-color:var(--rojo)}
+.inscripcion label > span{font:500 11px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--ceniza)}
+.inscripcion input:not([type=checkbox]){all:unset;font:400 26px/1.15 var(--mono);text-transform:uppercase;color:var(--hueso);width:100%;min-width:0}
+.inscripcion input::placeholder{color:var(--junta)}
+.inscripcion .acepto{grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;background:none;border:0;padding:12px 0}
+.inscripcion .acepto span{font:15px/1.5 var(--maquina);letter-spacing:0;text-transform:none;color:#c3d1d3}
+.inscripcion input[type=checkbox]{appearance:none;width:22px;height:22px;border:2px solid var(--ceniza);margin:0;display:grid;place-content:center}
+.inscripcion input[type=checkbox]:checked{background:var(--rojo);border-color:var(--rojo)}
+.inscripcion .aviso{grid-column:1/-1;margin:4px 0;min-height:1.6em;font:500 12px/1.6 var(--dato);letter-spacing:.1em;text-transform:uppercase;color:var(--rojo)}
+.inscripcion .boton{grid-column:1/-1;justify-self:start;border:0}
+.inscripcion .boton:disabled{background:var(--junta);color:var(--ceniza);cursor:default}
+.inscripcion.enviado label,.inscripcion.enviado .boton{display:none}
+@media (max-width:560px){.inscripcion label.corto{grid-column:1/-1}}
 
 .visor{position:fixed;inset:0;z-index:50;background:rgba(5,5,5,.96);display:grid;grid-template-rows:minmax(0,1fr) auto;place-items:center;gap:14px;
   padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fun .35s}
@@ -232,8 +247,7 @@ html,body{overflow-x:clip}
   .escena{grid-template-columns:minmax(0,1fr)}.ficha li{grid-template-columns:minmax(0,1fr)}.portada::after{right:8%}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
-</head>
-<body>
+
 <div class="lienzo">
   <nav class="herr" id="herr" aria-label="Ir a"></nav>
 
@@ -269,19 +283,23 @@ Proceso</span><button class="plegar" aria-label="Plegar o desplegar">−</button
     <div class="llamadas">
       <div class="casting" id="casting">
         <h2>Casting</h2>
-        <p>Buscamos modelos para el fashion film. Sin diálogos: cuerpo, gesto y ropa.</p>
-        <div class="perfiles">
-          <div class="posit">Protagonista<small>Presencia contenida, quietud, caída controlada</small></div>
-          <div class="posit cian">Figuras ×4<small>Fuerza física y actitud; llevan los looks</small></div>
-          <div class="posit rosa">Grupo<small>Planos de conjunto; sin experiencia</small></div>
-        </div>
+        <p>Buscamos modelos, mujeres y hombres, para un fashion film distópico. Sin diálogos: cuerpo, gesto y ropa. Rodaje en Galicia.</p>
         <ul class="ficha">
-          <li><b>Rodaje</b><span>Una o dos jornadas por perfil, por confirmar</span></li>
-          <li><b>Fechas</b><span>Se acuerdan con las personas seleccionadas</span></li>
-          <li><b>Condiciones</b><span>Se hablan con cada persona seleccionada</span></li>
+          <li><b>Perfil</b><span>+18 · complexión delgada · altura media-alta</span></li>
+          <li><b>Experiencia</b><span>No hace falta</span></li>
+          <li><b>Rodaje</b><span>Galicia · una o dos jornadas, fechas por acordar</span></li>
+          <li><b>Selección</b><span>Revisamos todas las inscripciones y te escribimos por Instagram</span></li>
         </ul>
-        <p><a class="boton" id="bcast" href="#casting" target="_blank" rel="noopener">Apuntarme</a></p>
-        <p class="mano">Solo yo veo las inscripciones</p>
+        <form class="inscripcion" id="fcast" novalidate>
+          <label><span>Nombre</span><input name="nombre" autocomplete="name" required></label>
+          <label><span>Instagram</span><input name="instagram" placeholder="@tuusuario" autocapitalize="none" autocorrect="off" spellcheck="false" required></label>
+          <label class="corto"><span>Edad</span><input name="edad" type="number" inputmode="numeric" min="18" max="99" required></label>
+          <label class="corto"><span>Ciudad</span><input name="ciudad" autocomplete="address-level2" required></label>
+          <label class="acepto"><input name="acepto" type="checkbox" required><span>Acepto que mis datos se usen solo para este casting</span></label>
+          <p class="aviso" id="avcast" role="status" aria-live="polite"></p>
+          <button class="boton" id="bcast" type="submit">Enviar</button>
+        </form>
+        <p class="mano">Solo nosotros vemos las inscripciones. Nunca pedimos datos ni fotos por mensaje.</p>
       </div>
     </div>
   </section>
@@ -293,7 +311,7 @@ Proceso</span><button class="plegar" aria-label="Plegar o desplegar">−</button
   <div class="pie"><button id="vant">← anterior</button><span id="vtxt"></span><button id="vsig">siguiente →</button><button id="vcer">cerrar ✕</button></div>
 </div>
 
-<script type="application/json" id="datos">{"marcos": [], "propio": [], "actualizado": "17 oct", "guion": {"propuesta": {"escenas": [["Pasividad", "", "", ""], ["Poder", "", "", ""], ["Control", "", "", ""], ["Distracción", "", "", ""], ["Discordia", "", "", ""], ["Fractura", "", "", ""]]}}, "desglose": [], "form_casting": "", "modo": "publico"}</script>
+<script type="application/json" id="datos">{"marcos": [], "propio": [], "actualizado": "20 oct", "guion": {"propuesta": {"escenas": [["Pasividad", "", "", ""], ["Poder", "", "", ""], ["Control", "", "", ""], ["Distracción", "", "", ""], ["Discordia", "", "", ""], ["Fractura", "", "", ""]]}}, "desglose": [], "form_casting": "", "casting_envio": "perdidadelalma@proton.me", "modo": "publico"}</script>
 <script>
 const D = JSON.parse(document.getElementById("datos").textContent);
 // ancho de la barra de scroll, para que lo de «a todo el ancho» no se corte por un lado
@@ -321,7 +339,29 @@ $("#cinta").innerHTML = [...escenas, ...escenas, ...escenas, ...escenas].map(x =
 // storyboards, referencias, pruebas
 // formularios
 const pon = (el, url, txt) => { if (url) el.href = url; else { el.setAttribute("aria-disabled", "true"); el.textContent = txt; } };
- pon($("#bcast"), D.form_casting, "Inscripciones muy pronto");
+// casting: el formulario es de la web; cada inscripción llega por correo con FormSubmit (D.casting_envio = correo o código de FormSubmit)
+(() => {
+  const f = $("#fcast"), av = $("#avcast"), b = $("#bcast"), destino = D.casting_envio;
+  if (!destino) { b.disabled = true; b.textContent = "Inscripciones muy pronto"; return; }
+  f.addEventListener("submit", async e => {
+    e.preventDefault();
+    const v = Object.fromEntries(new FormData(f));
+    v.instagram = (v.instagram || "").trim().replace(/^@?/, "@");
+    if (!v.nombre?.trim() || v.instagram.length < 2 || !v.ciudad?.trim()) { av.textContent = "Faltan datos"; return; }
+    if (!(+v.edad >= 18)) { av.textContent = "Tienes que ser mayor de edad"; return; }
+    if (!v.acepto) { av.textContent = "Marca la casilla para continuar"; return; }
+    const datos = {Nombre: v.nombre.trim(), Instagram: v.instagram, Edad: v.edad, Ciudad: v.ciudad.trim(), Acepta: "sí",
+                   _subject: "Casting: " + v.instagram, _template: "table", _captcha: "false"};
+    b.disabled = true; av.textContent = "Enviando…";
+    try {
+      const r = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(destino),
+        {method: "POST", headers: {"Content-Type": "application/json", Accept: "application/json"}, body: JSON.stringify(datos)});
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status);
+      f.classList.add("enviado"); av.textContent = "Recibido. Si encajas, te escribimos por Instagram.";
+    } catch { b.disabled = false; av.textContent = "No se ha podido enviar. Prueba otra vez en un rato."; }
+  });
+})();
 $("#pie").textContent = D.modo === "publico" ? "Pérdida del alma · fashion film · trabajo de fin de grado" : "Copiado del Miro y del tablero de trabajo el " + D.actualizado;
 
 
@@ -380,5 +420,5 @@ $("#vant").onclick = () => ver(k - 1); $("#vsig").onclick = () => ver(k + 1); $(
 visor.addEventListener("click", e => { if (e.target === visor) visor.hidden = true; });
 addEventListener("keydown", e => { if (visor.hidden) return; if (e.key === "Escape") visor.hidden = true; if (e.key === "ArrowLeft") ver(k - 1); if (e.key === "ArrowRight") ver(k + 1); });
 </script>
-</body>
+
 </html>
