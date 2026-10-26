@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PLATÓ · Instrucciones</title>
+<style>
+@font-face { font-family: "Senal"; src: url("PerdidaSenal.ttf"); }
+@font-face { font-family: "Bloque"; src: url("PerdidaBloque.ttf"); }
+:root {
+  --hormigon: #0a1112; --hormigon2: #111b1d; --hormigon3: #1a272a;
+  --niebla: #a4b4ba; --niebla-osc: #607076; --cian: #4fe3f0;
+}
+* { box-sizing: border-box; }
+html { background: var(--hormigon); }
+body {
+  margin: 0; color: var(--niebla); background: var(--hormigon);
+  font: 17px/1.6 "Segoe UI", system-ui, sans-serif;
+}
+/* líneas de barrido y viñeta, como en las piezas de la cuenta */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55));
+}
+.osd { font-family: Consolas, "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; color: var(--niebla-osc); }
+header { position: relative; min-height: 78vh; display: grid; place-items: end start; padding: 32px max(16px, 6vw); overflow: hidden; }
+header img.fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; filter: contrast(1.05); }
+header .top { position: absolute; top: 22px; left: max(16px, 6vw); right: max(16px, 6vw); display: flex; justify-content: space-between; }
+header .rec::after { content: " ●"; color: var(--cian); animation: parpadeo 1.2s steps(2) infinite; }
+@keyframes parpadeo { 50% { opacity: 0; } }
+h1 { position: relative; font-family: "Senal", Impact, sans-serif; font-weight: normal; line-height: .9; margin: 0 0 12px; font-size: clamp(56px, 13vw, 150px); color: #dfe9eb;
+  text-shadow: -3px 0 rgba(255,40,60,.45), 3px 0 rgba(40,120,255,.45); }
+h1 span { color: var(--cian); }
+.firma { position: relative; font-family: "Bloque", Impact, sans-serif; color: var(--cian); font-size: clamp(20px, 3vw, 30px); letter-spacing: .04em; }
+main { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
+h2 { font-family: "Senal", Impact, sans-serif; font-weight: normal; color: #dfe9eb; font-size: clamp(30px, 5vw, 44px); margin: 64px 0 8px;
+  text-shadow: -2px 0 rgba(255,40,60,.4), 2px 0 rgba(40,120,255,.4); }
+h2 small { display: block; font-family: Consolas, monospace; font-size: 13px; color: var(--cian); letter-spacing: .1em; text-shadow: none; }
+h3 { color: #dfe9eb; margin: 28px 0 4px; font-size: 18px; }
+p, li { max-width: 68ch; }
+a { color: var(--cian); }
+code, kbd { font-family: Consolas, monospace; background: var(--hormigon3); color: #dfe9eb; padding: 1px 6px; border-radius: 3px; font-size: .92em; }
+.paso { display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--hormigon3); }
+.paso .n { font-family: "Senal", Impact, sans-serif; font-size: 40px; color: var(--cian); line-height: 1; }
+.caja { background: var(--hormigon2); border-left: 3px solid var(--cian); padding: 14px 18px; margin: 18px 0; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--hormigon3); vertical-align: top; }
+th { color: var(--cian); font-family: Consolas, monospace; font-weight: normal; text-transform: uppercase; font-size: 12px; letter-spacing: .08em; }
+.tira { display: flex; gap: 8px; margin: 18px 0; }
+.tira img { width: 33.333%; min-width: 0; aspect-ratio: 1; object-fit: cover; }
+footer { text-align: center; padding: 40px 16px 60px; }
+figure.cap { margin: 14px 0 26px; background: var(--hormigon2); }
+figure.cap img { width: auto; max-width: 100%; height: auto; display: block; border: 1px solid var(--hormigon3); }
+figure.cap figcaption { font: 13px/1.4 Consolas, monospace; color: var(--niebla-osc); padding: 8px 12px; }
+@media (max-width: 560px) { .paso { grid-template-columns: 40px 1fr; } .paso .n { font-size: 30px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="fondo" src="../icons/foto.png" alt="">
+  <div class="top osd"><span>CH-02 · INSTRUCCIONES</span><span class="rec">REC</span></div>
+  <div>
+    <h1>PLATÓ<br><span>LUZ REAL</span></h1>
+    <div class="firma">PARA BLENDER · POR TONIÑO</div>
+    <div class="osd" style="margin-top:8px">Pérdida del Alma · @perdidadelalma · addon n.º 02</div>
+  </div>
+</header>
+
+<main>
+
+<p>Este addon sirve para llevar al plató la luz que has diseñado en Blender. Pones una persona donde va a estar el actor,
+en la pose que vaya a tener, y el addon mide toda la luz que le llega a la cara: luces de Blender, HDRI, cielo, objetos que brillan y rebotes.
+La separa en clave, relleno, contra, cenital… y te dice con qué <b>foco real</b> hacer cada una: dónde ponerlo,
+a qué altura, con qué modificador, a qué potencia y con qué temperatura de color o gel.</p>
+<p>También funciona al revés: eliges los focos que tenéis, los colocas en la lista y el addon los crea en Blender
+para ver cómo va a quedar antes de montar.</p>
+
+<h2><small>01 · antes de empezar</small>Qué necesitas</h2>
+<ul>
+  <li>Blender 4.2 o más nuevo (probado en 4.5 y 5.0). No hay que instalar nada más.</li>
+  <li>Una escena con cámara activa. La medida usa Cycles por dentro aunque trabajes en EEVEE.</li>
+  <li>En el plató, un fotómetro de luz incidente para ajustar. El addon da el punto de partida.</li>
+</ul>
+
+<h2><small>02 · instalación</small>Instalar</h2>
+<div class="paso"><div class="n">1</div><div>En Blender: <b>Editar › Preferencias › Complementos</b>, flecha de arriba a la derecha y <b>Instalar desde el disco…</b></div></div>
+<div class="paso"><div class="n">2</div><div>Elige <code>plato_blender.zip</code> y activa <b>PLATÓ · Iluminación real</b>.</div></div>
+<div class="paso"><div class="n">3</div><div>En la vista 3D pulsa <kbd>N</kbd> y abre la pestaña <b>Plató</b>.</div></div>
+
+<h2><small>03 · la persona</small>Colocar al actor</h2>
+<p>La persona es un maniquí de 1,75 m (la estatura se cambia) con diez poses. Cada pose cambia por dónde le entra la luz:
+no es lo mismo una cara de pie que una cara agachada o tumbada mirando al techo.</p>
+<figure class="cap"><img src="pasos/poses.jpg" alt="Pose De pie, Brazos abiertos, Brazos arriba, Andando, Corriendo, Sentada, Sentada en el suelo, De rodillas, En cuclillas y Tumbada"><figcaption>Las diez poses. «Sentada» se apoya sola en el asiento que haya en la escena: una silla, un sofá, un trono.</figcaption></figure>
+<div class="paso"><div class="n">1</div><div>Elige la pose en la botonera y pulsa <b>Colocar</b>. Mueve el ratón por la escena: la persona se pega al suelo o a lo que haya debajo.</div></div>
+<div class="paso"><div class="n">2</div><div>Rueda del ratón para girarla, <kbd>C</kbd> para que mire a cámara, clic para dejarla, <kbd>Esc</kbd> para cancelar.</div></div>
+<div class="paso"><div class="n">3</div><div>Con la persona seleccionada, <b>Cambiar pose</b> la cambia sin moverla. El punto donde se mide la luz va siempre en la cara.</div></div>
+
+<h2><small>04 · uso</small>De Blender al plató</h2>
+<div class="paso"><div class="n">1</div><div><b>Cámara del rodaje.</b> Pon el diafragma (T), el ISO, los fps y el obturador con los que vais a rodar.
+De ahí sale cuántos lux necesita la clave: <code>E = 250 · T² / (t · ISO)</code>. Pon también la <b>distancia máxima</b> que cabe en vuestro plató.</div></div>
+<div class="paso"><div class="n">2</div><div><b>Medir la luz.</b> El addon hace una foto de 360° desde la cara de la persona y suma las luces de Blender con su fórmula.
+Tarda unos segundos. Sale la lista de focos del plató ordenada de más a menos fuerte.</div></div>
+<figure class="cap"><img src="pasos/panel.jpg" alt="Panel de PLATÓ" style="max-width:320px"><figcaption>El panel: poses, persona colocada, medir la luz y la lista de focos.</figcaption></figure>
+<div class="paso"><div class="n">3</div><div><b>Revisar la lista.</b> Cada foco tiene su papel, el foco elegido, el modificador, los lux que debe dar en la cara,
+la distancia y el ángulo. Si no os convence, pulsa el nombre del foco y búscalo en el catálogo (escribe marca, modelo, «rgb», «batería», «fresnel»…).
+La potencia y el gel se recalculan solos. En rojo sale lo que no llega. La casilla de cada foco lo quita de la hoja y de Blender.</div></div>
+<div class="paso"><div class="n">4</div><div><b>Hoja de plató.</b> <i>Hoja de plató (imprimir)</i> la abre en el navegador: planta vista desde arriba, la panorámica con los focos marcados y una ficha por foco.
+<i>Abrir en la tablet o el móvil</i> la comparte en la wifi y copia la dirección; en la tablet se puede marcar cada foco como montado.</div></div>
+<figure class="cap"><img src="pasos/hoja_trono.jpg" alt="Hoja de plató"><figcaption>La hoja de plató: planta con la cámara abajo y lo que ve la cara en 360° con cada foco numerado.</figcaption></figure>
+
+<h2><small>05 · al revés</small>Del plató a Blender</h2>
+<div class="paso"><div class="n">1</div><div>Con el <b>+</b> de la lista añade focos del catálogo (o los vuestros, ver abajo) y ponles papel, lux, distancia y ángulos.</div></div>
+<div class="paso"><div class="n">2</div><div><b>Crear focos en Blender</b> los pone en su sitio, apuntando a la cara, con el tamaño de su modificador y su color, en la colección «PLATÓ · focos».</div></div>
+<div class="paso"><div class="n">3</div><div>Con <b>Ver: Escena / Plató</b> comparas la luz original con la que vais a montar. Prueba otras poses para ver cómo les cae esa misma luz.</div></div>
+<figure class="cap"><img src="pasos/plato_3_camara.jpg" alt="Focos del plató creados en Blender"><figcaption>Los focos del plató creados en Blender alrededor de la persona.</figcaption></figure>
+
+<h2><small>06 · mi equipo</small>Con los focos que tenéis</h2>
+<p>No hace falta tener todos los focos del mundo. En el panel <b>Mi equipo</b> apuntas lo que tenéis o lo que vais consiguiendo, y cuántos de cada uno:</p>
+<div class="paso"><div class="n">1</div><div><b>Del catálogo:</b> busca el modelo (marca, «rgb», «panel», «fresnel»…) y se añade. Con − y + cambias cuántos hay.</div></div>
+<div class="paso"><div class="n">2</div><div><b>Foco nuevo:</b> si no está en el catálogo, escribe marca, modelo, tipo, vatios, lux a 1 m (de la ficha o medidos con fotómetro), tamaño y temperatura.</div></div>
+<div class="paso"><div class="n">3</div><div>Activa <b>Solo mi equipo</b> y mide: el addon reparte vuestros focos de la luz más fuerte a la más floja, sin usar más unidades de las que hay.
+Si se acaban, esa luz queda «sin foco».</div></div>
+<figure class="cap"><img src="pasos/equipo.jpg" alt="Panel Mi equipo" style="max-width:420px"><figcaption>Mi equipo: focos del catálogo y uno propio, con su cantidad.</figcaption></figure>
+
+<h2><small>07 · parecido</small>Cuánto se va a parecer</h2>
+<p>Cada foco tiene un <b>% de parecido</b> con la luz de Blender, y arriba de la lista sale el total. Se mira:</p>
+<ul>
+  <li><b>Intensidad:</b> si el foco llega a los lux que hacen falta (si no llega, baja según los pasos que le faltan).</li>
+  <li><b>Suavidad:</b> si la fuente se ve igual de grande desde la cara que en Blender.</li>
+  <li><b>Color:</b> si llega a la temperatura, o cuánto se aleja con el gel que hay.</li>
+  <li><b>Sitio:</b> si cabe en el plató y se puede poner a esa altura.</li>
+</ul>
+<p>El total pesa más las luces que más se ven. Una luz sin foco o desmarcada cuenta como 0.</p>
+<figure class="cap"><img src="pasos/parecido.jpg" alt="Parecido con Blender" style="max-width:420px"><figcaption>La lista con el parecido de cada foco y el total.</figcaption></figure>
+<p>El panel <b>Qué me falta</b> dice qué foco, si lo tuvierais, subiría más el parecido, y cuántos puntos. Sirve para decidir qué comprar o pedir prestado.
+Si ya lo tenéis pero hace falta otro, lo dice. Con <i>Lo tengo</i> se añade a Mi equipo.</p>
+<figure class="cap"><img src="pasos/falta.jpg" alt="Qué me falta" style="max-width:420px"><figcaption>Qué me falta: con un amaran 60x más, el parecido pasa del 90 al 94 %.</figcaption></figure>
+
+<h2><small>08 · catálogo</small>El catálogo</h2>
+<p>El catálogo general trae 42 focos (Aputure, amaran, Nanlite, Godox, ARRI, Astera, Litepanels, Dedolight y prácticos como bombillas o neón)
+y 12 modificadores. Los datos son <b>aproximados</b> (lux a 1 m con su accesorio, de fichas de fabricante): sirven para elegir y como punto de partida.
+Mi equipo y los focos propios se guardan en <code>~/PLATO/catalogo_propio.json</code> (vale para todos los proyectos); el botón del documento junto a <i>Solo mi equipo</i> lo abre por si queréis editarlo a mano.</p>
+<table>
+<tr><th>Campo</th><th>Qué es</th></tr>
+<tr><td><code>id</code></td><td>Nombre corto sin espacios</td></tr>
+<tr><td><code>tipo</code></td><td>COB, Panel, Tubo, Fresnel, Mini o Práctico (decide qué modificadores admite)</td></tr>
+<tr><td><code>lux_1m</code></td><td>Lux a 1 metro con su accesorio de serie y al 100 %</td></tr>
+<tr><td><code>tam_m</code></td><td>Tamaño de la superficie que emite, en metros</td></tr>
+<tr><td><code>k</code></td><td>Temperatura mínima y máxima, <code>[5600, 5600]</code> si es solo luz día</td></tr>
+<tr><td><code>rgb</code>, <code>bowens</code>, <code>bateria</code></td><td>true / false</td></tr>
+</table>
+
+<h2><small>09 · cómo piensa</small>Qué hace por dentro</h2>
+<ul>
+  <li><b>Luces de Blender:</b> se suman con su fórmula (punto y foco <code>P/4πd²</code>, área <code>P/πd²</code>, sol su fuerza) y se comprueba si algo las tapa.</li>
+  <li><b>El resto:</b> una panorámica de 360° con Cycles desde la cara. Las zonas brillantes se agrupan en fuentes y lo demás es ambiente (cielo, horizonte, suelo).</li>
+  <li><b>Papel:</b> según el ángulo con la cámara y la altura: clave, relleno, contra, lateral, cenital, rebote de suelo.</li>
+  <li><b>Suavidad:</b> el tamaño aparente de la fuente vista desde la cara decide el modificador y la distancia (una ventana de 1,2 m a 2 m es igual de suave que en Blender).</li>
+  <li><b>Potencia:</b> lux que debe dar × distancia² ÷ lux a 1 m del foco con el modificador y el gel.</li>
+  <li><b>Color:</b> temperatura por McCamy. Si el foco no llega a esa temperatura propone un gel CTO o CTB; si es un color saturado, modo RGB o un gel de color.</li>
+</ul>
+
+<h2><small>10 · problemas</small>Si algo falla</h2>
+<table>
+<tr><th>Pasa esto</th><th>Haz esto</th></tr>
+<tr><td>«No llega luz a la cara»</td><td>La persona está dentro de un objeto o la escena no tiene luz. Muévela un poco.</td></tr>
+<tr><td>Un foco sale en rojo, «no llega»</td><td>Acércalo, quita difusión, elige uno más potente o abre diafragma / sube ISO.</td></tr>
+<tr><td>Salen focos muy flojos que no importan</td><td>Desmárcalos en la lista: no salen en la hoja ni se crean.</td></tr>
+<tr><td>Una luz sale «sin foco»</td><td>Se acabó vuestro equipo: mira «Qué me falta», añade otro foco o desactiva «Solo mi equipo».</td></tr>
+<tr><td>La tablet no abre la dirección</td><td>Tiene que estar en la misma wifi. Windows puede pedir permiso al firewall la primera vez.</td></tr>
+</table>
+
+<h2><small>11 · cómo se hizo</small>Modo de trabajo</h2>
+<p>Igual que CorridorKey, lo desarrollé con Claude Code: yo decidía qué tenía que hacer el addon y cómo se usa en el plató,
+y el asistente escribía el código, lo probaba en Blender sin interfaz y luego con interfaz, y me enseñaba capturas.
+Para comprobar la traducción, la escena del trono se midió, se crearon los focos del plató en Blender y se volvió a medir con solo esos focos: las proporciones coinciden.</p>
+
+<h2><small>12 · créditos</small>Créditos</h2>
+<p>PLATÓ · Iluminación real, por Toniño, para el TFG <i>Pérdida del Alma</i>. Licencia GPL 3.0 o posterior, como Blender.
+Los datos de los focos son de las fichas públicas de cada fabricante, aproximados.</p>
+
+</main>
+<footer class="osd">PLATÓ · por Toniño · <a href="https://www.instagram.com/perdidadelalma/">@perdidadelalma</a></footer>
+</body>
+</html>

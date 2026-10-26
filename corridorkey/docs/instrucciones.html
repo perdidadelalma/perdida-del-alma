@@ -142,6 +142,9 @@ transparencia. El plano conserva su posición, su escala y su animación: puedes
 
 <figure class="cap"><img src="pasos/07_plano_antes.jpg" alt="Un Image as Plane con el vídeo seleccionado (1): el origen pasa a Planos seleccionados (2); Grabar recorte (3)" loading="lazy"><figcaption>Un Image as Plane con el vídeo seleccionado (1): el origen pasa a Planos seleccionados (2); Grabar recorte (3)</figcaption></figure>
 <figure class="cap"><img src="pasos/08_plano_despues.jpg" alt="El plano ya recortado en su propio material (1), con Devolver la imagen original (2) y la cinta terminada (3)" loading="lazy"><figcaption>El plano ya recortado en su propio material (1), con Devolver la imagen original (2) y la cinta terminada (3)</figcaption></figure>
+<p><b>Ejemplo completo:</b> el vídeo de croma como plano en un decorado 3D con la ciudad del TFG de telón. Se recortó el plano para quitar el pie de foco de los lados y un banco de hormigón tapa el corte del encuadre.</p>
+<video src="ejemplos/image_as_plane.mp4" autoplay muted loop playsinline style="width:100%;max-width:960px;display:block;margin:14px 0"></video>
+<figure class="cap"><img src="ejemplos/plano_blender_escena.jpg" alt="El plano recortado en la vista 3D, con el origen «Planos seleccionados»" loading="lazy"><figcaption>El plano recortado en la vista 3D, con el origen «Planos seleccionados»</figcaption></figure>
 <h3>Los planos de COLMAP</h3>
 <p>Al importar una reconstrucción de COLMAP con <b>Photogrammetry Importer</b> y la opción <i>Add image planes</i>, cada cámara trae
 un plano con su foto. Selecciona todos los planos que quieras y graba el recorte: se procesan juntos, en orden de nombre de archivo,
@@ -157,6 +160,12 @@ esa cámara (origen <b>Fondo de la cámara</b>) y graba el recorte:</p>
   Ponlo más cerca o más lejos para decidir qué objetos 3D le pasan por delante.</li>
 </ul>
 
+<p><b>Ejemplo completo:</b> rodaje propio de una zapatilla con una GoPro alrededor. COLMAP reconstruyó la cámara; el tramo elegido se importó con Photogrammetry Importer y el addon recortó el fondo de la cámara animada con el plano pegado a la cámara. El aro de neón y los pilares 3D se mueven exactamente como la GoPro.</p>
+<video src="ejemplos/colmap_zapatilla.mp4" autoplay muted loop playsinline style="width:100%;max-width:960px;display:block;margin:14px 0"></video>
+<figure class="cap"><img src="ejemplos/colmap_blender_escena.jpg" alt="La reconstrucción de COLMAP en Blender: nube de puntos y recorrido de la cámara" loading="lazy"><figcaption>La reconstrucción de COLMAP en Blender: nube de puntos y recorrido de la cámara</figcaption></figure>
+<figure class="cap"><img src="ejemplos/colmap_blender_camara.jpg" alt="Vista desde la cámara de COLMAP con el origen «Fondo de la cámara» y el plano pegado a la cámara" loading="lazy"><figcaption>Vista desde la cámara de COLMAP con el origen «Fondo de la cámara» y el plano pegado a la cámara</figcaption></figure>
+<div class="caja"><b>Pista animada para COLMAP:</b> si el recorte se queda con cosas del plató (vigas, sábanas, trípodes), pon una esfera alrededor del sujeto en 3D, renderízala en blanco sobre negro desde la cámara de COLMAP y úsala como <b>Pista › Vídeo</b> con confianza 0,6. Es una máscara basura que sigue la cámara sola.</div>
+<figure class="cap"><img src="ejemplos/colmap_pista.jpg" alt="La esfera de la pista sobre tres fotogramas: sigue a la zapatilla mientras la cámara se mueve" loading="lazy"><figcaption>La esfera de la pista sobre tres fotogramas: sigue a la zapatilla mientras la cámara se mueve</figcaption></figure>
 <h3>Compositor</h3>
 <p>Con <b>Salida › Nodos en el compositor</b>, el addon añade un nodo Imagen con el recorte y un <i>Alpha Over</i> encima de lo que
 ya llegaba a la salida del compositor (normalmente las capas de render). Sirve para componer al actor sobre el render final.</p>
@@ -195,6 +204,7 @@ Cada trabajo deja su carpeta en <code>//corridorkey/&lt;clip&gt;_v001/</code>, j
 <tr><td>Error de memoria (CUDA out of memory)</td><td>Cierra otros programas que usen la GPU y pon <b>Memoria › Poca VRAM</b>, o <i>Manual</i> con ventana 4 y paso 2.</td></tr>
 <tr><td>Recorta a quien no es</td><td>Usa una pista con máscara sobre el sujeto correcto.</td></tr>
 <tr><td>Bordes con verde</td><td>Sube <b>Quitar derrame</b> a 0,75 o más.</td></tr>
+<tr><td>COLMAP solo registra unas pocas imágenes</td><td>Un croma liso con marcas repetidas no le basta: necesita que se vean cosas fijas con textura (paredes, suelo, objetos del plató) y que la cámara se desplace, no solo gire. Recorta antes al actor y usa su alfa como máscara de COLMAP para que ignore lo que se mueve.</td></tr>
 <tr><td>Cualquier otro error</td><td>En <b>Cintas</b>, el icono de texto abre el registro del trabajo con el mensaje completo.</td></tr>
 </table>
 
