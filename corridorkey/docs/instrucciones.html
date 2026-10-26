@@ -51,6 +51,9 @@ th { color: var(--cian); font-family: Consolas, monospace; font-weight: normal; 
 .tira { display: flex; gap: 8px; margin: 18px 0; }
 .tira img { width: 33.333%; min-width: 0; aspect-ratio: 1; object-fit: cover; }
 footer { text-align: center; padding: 40px 16px 60px; }
+figure.cap { margin: 14px 0 26px; background: var(--hormigon2); }
+figure.cap img { width: auto; max-width: 100%; height: auto; display: block; border: 1px solid var(--hormigon3); }
+figure.cap figcaption { font: 13px/1.4 Consolas, monospace; color: var(--niebla-osc); padding: 8px 12px; }
 @media (max-width: 560px) { .paso { grid-template-columns: 40px 1fr; } .paso .n { font-size: 30px; } }
 </style>
 </head>
@@ -91,6 +94,7 @@ pulsas <b>Grabar recorte</b> y el resultado vuelve solo a la línea de tiempo o 
   En Blender: <b>Editar › Preferencias › Add-ons</b>, flecha de la esquina › <b>Instalar desde disco</b>,
   y elige <code>corridorkey_blender.zip</code>. Activa <b>CorridorKey para Blender</b>.
 </div></div>
+<figure class="cap"><img src="pasos/01_instalar.jpg" alt="Preferencias › Add-ons: el addon instalado y activado (1)" loading="lazy"><figcaption>Preferencias › Add-ons: el addon instalado y activado (1)</figcaption></figure>
 <div class="paso"><div class="n">2</div><div>
   En las preferencias del addon pulsa <b>Instalar lo que falta</b>. Descarga el código de CorridorKey,
   PyTorch con CUDA, los pesos del modelo (unos 5 GB) y ffmpeg en <code>C:\Users\&lt;tú&gt;\CorridorKey2</code>.
@@ -100,6 +104,7 @@ pulsas <b>Grabar recorte</b> y el resultado vuelve solo a la línea de tiempo o 
   Cuando todos los puntos de la <b>comprobación de señal</b> estén en verde, ya puedes recortar.
 </div></div>
 
+<figure class="cap"><img src="pasos/02_comprobar.jpg" alt="La comprobación de señal, toda en verde: listo para grabar (2)" loading="lazy"><figcaption>La comprobación de señal, toda en verde: listo para grabar (2)</figcaption></figure>
 <h2><small>03 · el panel</small>Dónde está</h2>
 <p>Pulsa <kbd>N</kbd> en el <b>Editor de secuencias</b>, en el <b>Editor de clips</b> o en la <b>Vista 3D</b>
 y abre la pestaña <b>CorridorKey</b>. Arriba está el tríptico, debajo el botón grande y las secciones.</p>
@@ -113,13 +118,18 @@ y abre la pestaña <b>CorridorKey</b>. Arriba está el tríptico, debajo el bot�
 <tr><td>Cintas</td><td>Los trabajos en marcha y terminados, con su progreso, carpeta y registro.</td></tr>
 <tr><td>Señal</td><td>Créditos, enlaces y estas instrucciones.</td></tr>
 </table>
+<figure class="cap"><img src="pasos/09_senal.jpg" alt="La sección Señal" loading="lazy"><figcaption>La sección Señal: foto, créditos, enlaces a @perdidadelalma y a la web, e instrucciones</figcaption></figure>
 
 <h2><small>04 · uso</small>Recortar un plano</h2>
 <div class="paso"><div class="n">1</div><div>Mete el clip en el <b>Editor de secuencias</b> (Añadir › Película o Imagen/secuencia) y selecciónalo.</div></div>
+<figure class="cap"><img src="pasos/03_clip_en_vse.jpg" alt="El clip de croma seleccionado en el VSE (1) y el botón Grabar recorte en el panel (2)" loading="lazy"><figcaption>El clip de croma seleccionado en el VSE (1) y el botón Grabar recorte en el panel (2)</figcaption></figure>
 <div class="paso"><div class="n">2</div><div>Si el plano es sencillo, deja la pista en <b>Sin pista</b>. Si hay varias personas o el modelo se equivoca de sujeto, usa una máscara (paso siguiente).</div></div>
 <div class="paso"><div class="n">3</div><div>Pon <b>Solo los primeros</b> a 24 y pulsa <b>Grabar recorte</b> para ver una prueba en pocos segundos.</div></div>
 <div class="paso"><div class="n">4</div><div>Si la prueba te convence, vuelve a poner <b>Solo los primeros</b> a 0 y graba el plano entero. Mientras tanto puedes seguir trabajando; si lanzas más, se ponen en cola.</div></div>
+<figure class="cap"><img src="pasos/05_grabando.jpg" alt="Grabando: la cinta en REC con su barra de progreso" loading="lazy"><figcaption>Grabando: la cinta en REC con su barra de progreso</figcaption></figure>
 <div class="paso"><div class="n">5</div><div>Al terminar, el recorte aparece en un canal encima del original con <i>Alpha Over</i>. Si marcaste <b>Plano en 3D</b>, también se crea un plano con el recorte animado, listo para colocarlo en una escena.</div></div>
+<figure class="cap"><img src="pasos/06_resultado.jpg" alt="Terminado: el recorte encima del original (1) y la cinta en Señal limpia (2)" loading="lazy"><figcaption>Terminado: el recorte encima del original (1) y la cinta en Señal limpia (2)</figcaption></figure>
+<figure class="cap"><img src="pasos/antes_despues.jpg" alt="Antes y después: del plató de croma a la ciudad de Pérdida del Alma" loading="lazy"><figcaption>Antes y después: del plató de croma a la ciudad de Pérdida del Alma</figcaption></figure>
 
 <h2><small>05 · escena 3D y colmap</small>Recortar dentro de la escena</h2>
 <p>No hace falta exportar nada: el addon recorta lo que ya está en la escena y deja el resultado en el mismo sitio.
@@ -130,6 +140,8 @@ En la <b>Vista 3D</b>, con el origen en <i>Automático</i>, mira lo que tienes s
 <b>Grabar recorte</b>. Al terminar, la imagen del plano se cambia por el recorte dentro de su propio material y se conecta la
 transparencia. El plano conserva su posición, su escala y su animación: puedes moverlo, iluminarlo y renderizarlo con la escena.</p>
 
+<figure class="cap"><img src="pasos/07_plano_antes.jpg" alt="Un Image as Plane con el vídeo seleccionado (1): el origen pasa a Planos seleccionados (2); Grabar recorte (3)" loading="lazy"><figcaption>Un Image as Plane con el vídeo seleccionado (1): el origen pasa a Planos seleccionados (2); Grabar recorte (3)</figcaption></figure>
+<figure class="cap"><img src="pasos/08_plano_despues.jpg" alt="El plano ya recortado en su propio material (1), con Devolver la imagen original (2) y la cinta terminada (3)" loading="lazy"><figcaption>El plano ya recortado en su propio material (1), con Devolver la imagen original (2) y la cinta terminada (3)</figcaption></figure>
 <h3>Los planos de COLMAP</h3>
 <p>Al importar una reconstrucción de COLMAP con <b>Photogrammetry Importer</b> y la opción <i>Add image planes</i>, cada cámara trae
 un plano con su foto. Selecciona todos los planos que quieras y graba el recorte: se procesan juntos, en orden de nombre de archivo,
@@ -160,6 +172,7 @@ que deja la imagen y el material como estaban.</div>
   <li>En el panel, <b>Pista del sujeto › Modo › Máscara, primer fotograma</b> y elige la máscara.</li>
   <li>Si la máscara está animada a lo largo del plano (roto o máscara basura), usa <b>Máscara, todo el clip</b>.</li>
 </ol>
+<figure class="cap"><img src="pasos/04_mascara.jpg" alt="La máscara alrededor de la modelo en el primer fotograma (1) y la pista elegida en el panel (2)" loading="lazy"><figcaption>La máscara alrededor de la modelo en el primer fotograma (1) y la pista elegida en el panel (2)</figcaption></figure>
 <div class="caja"><b>Confianza en la pista:</b> 0,95 si la máscara es buena; 0,75 si es aproximada; 0,5 o menos si es un borrón.
 Con confianza alta el modelo obedece la máscara aunque se pase de grande: una máscara rectangular enorme deja un rectángulo de fondo.
 Si la máscara es tosca, baja la confianza.</div>
@@ -202,6 +215,9 @@ Cada trabajo deja su carpeta en <code>//corridorkey/&lt;clip&gt;_v001/</code>, j
   <li><b>Recortes reales.</b> El instalador del propio addon instaló CorridorKey en el PC1, y los recortes se lanzaron de verdad en la RTX 3050: VSE, <i>Image as Plane</i>, planos tipo COLMAP y cámara. Cada render se revisó a ojo.</li>
   <li><b>Probar en el Blender abierto.</b> Mediante el puerto del addon MCP (9876) se activó el addon en el Blender de Toniño y se sacaron capturas del panel para revisar cómo se veía.</li>
   <li><b>Corregir y repetir.</b> Cada fallo encontrado (instalación invisible en <code>AppData</code>, banner cortado, tamaño 0×0 en secuencias, imágenes reutilizadas en COLMAP, el tema global) se corrigió y se volvió a probar.</li>
+  <li><b>Capturas reales.</b> Con un vídeo de croma de uso libre (Pexels) se grabó un recorte de verdad en el Blender abierto,
+    paso a paso, y se sacaron las capturas de estas instrucciones y de la web en cada momento: instalar, elegir el clip,
+    dibujar la máscara, grabar, el resultado sobre la ciudad y el Image as Plane. Las prepara <code>tools/preparar_pasos.py</code>.</li>
   <li><b>Otra versión de Blender.</b> Se descargó Blender 5.0.1 portable (comprobando su suma SHA-256 oficial) y se repitieron las pruebas, sobre todo por el compositor nuevo.</li>
 </ol>
 

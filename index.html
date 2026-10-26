@@ -330,7 +330,7 @@ const grupos = id => (M[id].bloques.find(b => b.tipo === "grupos") || {items: []
 const IR = [["inicio", "Inicio"], ["escenas", "Escenas"], ["proyecto", "El proyecto"], ["avance", "Avance"], ["guion", "Guion"], ["storyboards", "Storyboards"], ["desglose", "Desglose"], ["referencias", "Referencias"], ["pruebas", D.modo === "publico" ? "Proceso" : "Pruebas"], ["videos", "Vídeos"], ["estudio", "Estudio"], ["participa", "Tutores"], ["casting", "Casting"]]
   .filter(([id]) => document.getElementById(id) && !(D.modo === "publico" && id === "participa"))
   .sort((a, b) => document.getElementById(a[0]).compareDocumentPosition(document.getElementById(b[0])) & 2 ? 1 : -1);
-$("#herr").innerHTML = IR.map(([id, n]) => `<a href="#${id}" data-id="${id}" class="${id === "casting" ? "rojo" : ""}">${n}</a>`).join("") + `<a href="${D.modo === "publico" ? "corridorkey/" : "https://perdidadelalma.github.io/perdida-del-alma/corridorkey/"}">CorridorKey</a>`
+$("#herr").innerHTML = IR.map(([id, n]) => `<a href="#${id}" data-id="${id}" class="${id === "casting" ? "rojo" : ""}">${n}</a>`).join("") + `<a href="${D.modo === "publico" ? "addons/" : "https://perdidadelalma.github.io/perdida-del-alma/addons/"}">Addons</a>`
   + (D.modo === "publico" ? "" : `<a href="https://miro.com/app/board/uXjVG7sJBJ0=/" target="_blank" rel="noopener">Miro ↗</a>`);
 
 const escenas = D.guion.propuesta.escenas.map(e => e[0]);

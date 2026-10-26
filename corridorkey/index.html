@@ -254,7 +254,7 @@ html,body{overflow-x:clip}
 :root{--sb:0px}
 @font-face{font-family:"Senal";src:url("docs/PerdidaSenal.ttf")}
 @font-face{font-family:"Bloque";src:url("docs/PerdidaBloque.ttf")}
-.portada h1.ck{font-family:"Bloque",var(--mono);font-size:clamp(64px,12vw,190px);line-height:.95;text-shadow:-4px 0 rgba(255,40,60,.35),4px 0 rgba(40,120,255,.35)}
+.portada h1.ck{font-family:"Bloque",var(--mono);font-size:clamp(40px,13vw,190px);line-height:.95;text-shadow:-4px 0 rgba(255,40,60,.35),4px 0 rgba(40,120,255,.35)}
 .portada h1.ck em{color:var(--rojo)}
 .triptico{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:760px;margin-top:28px}
 .triptico img{width:100%;aspect-ratio:1;object-fit:cover}
@@ -271,18 +271,25 @@ code,kbd{font:500 13px var(--dato);background:var(--losa);color:var(--hueso);pad
 .capturas img{width:100%;height:auto}
 .capturas figcaption{font:500 10px var(--dato);letter-spacing:.12em;text-transform:uppercase;color:var(--ceniza);padding:8px 10px}
 p{max-width:70ch}
+.pasos-fotos li > div{display:grid;gap:10px}
+.pasos-fotos h3{font-size:clamp(24px,2.6vw,34px)}
+.pasos-fotos p{margin:0}
+.pasos-fotos figure,figure.grande{margin:8px 0 0;background:var(--hormigon)}
+.pasos-fotos img,figure.grande img{width:auto;max-width:100%;height:auto;border:1px solid var(--junta)}
+figure.grande{margin-top:28px}
+figure.grande figcaption{font:500 10px var(--dato);letter-spacing:.12em;text-transform:uppercase;color:var(--ceniza);padding:8px 10px}
 @media (max-width:820px){.descarga{grid-template-columns:minmax(0,1fr)}.pasos li{grid-template-columns:48px minmax(0,1fr)}.pasos li::before{font-size:32px}}
 </style>
 </head>
 <body>
 <div class="lienzo">
   <nav class="herr" aria-label="Ir a">
-    <a href="../#inicio">Inicio</a><a href="../#escenas">Escenas</a><a href="../#proyecto">El proyecto</a><a href="../#casting" class="rojo">Casting</a><a href="./" class="on" aria-current="page">CorridorKey</a>
+    <a href="../#inicio">Inicio</a><a href="../#escenas">Escenas</a><a href="../#proyecto">El proyecto</a><a href="../#casting" class="rojo">Casting</a><a href="../addons/" class="on">Addons</a>
   </nav>
 
   <header class="portada" id="inicio">
     <div>
-      <span class="mano">Herramienta del proyecto · addon gratuito para Blender</span>
+      <span class="mano"><a href="../addons/">Addons</a> › n.º 01 · gratuito para Blender</span>
       <h1 class="ck">Corridor<em>Key</em></h1>
       <p class="sub">Recorta actores de un croma con inteligencia artificial sin salir de Blender: en la línea de tiempo, en los planos de imagen de la escena y en las cámaras reconstruidas con COLMAP. Hecho para componer <i>Pérdida del Alma</i>.</p>
       <div class="triptico" aria-hidden="true">
@@ -299,13 +306,15 @@ p{max-width:70ch}
       <div class="posit cian" style="max-width:360px">Image as Plane<small>Cambia la imagen del plano por el recorte dentro de su propio material, con la transparencia conectada.</small></div>
       <div class="posit rosa" style="max-width:360px">COLMAP<small>Recorta los planos y el fondo de la cámara reconstruida y compone al actor con el mismo movimiento de cámara.</small></div>
     </div>
+    <figure class="grande"><img src="img/antes_despues.jpg" alt="Antes: la modelo en el plató de croma. Después: recortada sobre la ciudad de Pérdida del Alma" loading="lazy">
+      <figcaption>Antes y después · recorte real en Blender con una RTX 3050 de 6 GB · 1080p</figcaption></figure>
   </section>
 
   <section class="marco" id="descarga"><span class="nombre">Descarga</span>
     <div class="cab"><h2>Descargar</h2><span class="mano">Gratis · código abierto (GPL-3.0)</span></div>
     <div class="descarga">
       <div>
-        <a class="boton" href="corridorkey_blender.zip" download>corridorkey_blender.zip<small>Versión 0.3.0 · 1.8 MB</small></a>
+        <a class="boton" href="corridorkey_blender.zip" download>corridorkey_blender.zip<small>Versión 0.3.0 · 3.3 MB</small></a>
         <p style="margin-top:22px">El zip es el addon. La primera vez, el propio addon descarga el modelo y lo que necesita (unos 9 GB) en una carpeta aparte.</p>
         <p><a href="docs/instrucciones.html">Instrucciones completas →</a></p>
       </div>
@@ -328,24 +337,28 @@ p{max-width:70ch}
     </ol>
   </section>
 
-  <section class="marco" id="uso"><span class="nombre">Uso</span>
-    <div class="cab"><h2>Grabar recorte</h2><span class="mano">El resumen; el detalle está en las instrucciones</span></div>
-    <ol class="pasos">
-      <li><div>Selecciona lo que quieres recortar: una tira del VSE, un <i>Image as Plane</i>, los planos de COLMAP o la cámara con fondo.</div></li>
-      <li><div>Si hay varias personas o el modelo duda, dibuja una <b>máscara</b> sobre el sujeto en el primer fotograma y úsala como pista.</div></li>
-      <li><div>Pon <b>Solo los primeros</b> a 24 para una prueba rápida y pulsa <b>Grabar recorte</b>. Puedes seguir trabajando; si lanzas varios, se ponen en cola.</div></li>
-      <li><div>El recorte vuelve solo a su sitio, en EXR con transparencia. Si no te convence, <b>Devolver la imagen original</b> deja el plano como estaba.</div></li>
+  <section class="marco" id="uso"><span class="nombre">Paso a paso</span>
+    <div class="cab"><h2>Grabar recorte</h2><span class="mano">Capturas reales de Blender 4.5 · el detalle está en las instrucciones</span></div>
+    <ol class="pasos pasos-fotos">
+      <li><div><h3>Instalar el addon</h3><p>Editar › Preferencias › Add-ons › Instalar desde disco, elige <code>corridorkey_blender.zip</code> y actívalo (1).</p><figure><img src="docs/pasos/01_instalar.jpg" alt="Instalar el addon" loading="lazy"></figure></div></li>
+      <li><div><h3>Instalar lo que falta</h3><p>En las preferencias del addon, <b>Instalar lo que falta</b>. Cuando la comprobación de señal está toda en verde (2), ya se puede grabar.</p><figure><img src="docs/pasos/02_comprobar.jpg" alt="Instalar lo que falta" loading="lazy"></figure></div></li>
+      <li><div><h3>El clip en el editor de secuencias</h3><p>Mete el plano de croma en el VSE y selecciónalo (1). En la barra lateral (<kbd>N</kbd>), pestaña CorridorKey, está el botón <b>Grabar recorte</b> (2).</p><figure><img src="docs/pasos/03_clip_en_vse.jpg" alt="El clip en el editor de secuencias" loading="lazy"></figure></div></li>
+      <li><div><h3>Marcar al sujeto (opcional)</h3><p>En el editor de clips, modo Máscara, rodea al sujeto en el primer fotograma (1). En <b>Pista del sujeto</b> elige «Máscara, primer fotograma» y esa máscara (2).</p><figure><img src="docs/pasos/04_mascara.jpg" alt="Marcar al sujeto (opcional)" loading="lazy"></figure></div></li>
+      <li><div><h3>Grabar</h3><p>Pulsa <b>Grabar recorte</b>. La cinta pasa a <b>REC</b> y la barra cuenta las ventanas que faltan; mientras tanto Blender sigue libre.</p><figure><img src="docs/pasos/05_grabando.jpg" alt="Grabar" loading="lazy"></figure></div></li>
+      <li><div><h3>Señal limpia</h3><p>Al acabar, el recorte aparece en un canal encima del original con Alpha Over (1) y la cinta pasa a <b>Señal limpia</b> (2).</p><figure><img src="docs/pasos/06_resultado.jpg" alt="Señal limpia" loading="lazy"></figure></div></li>
+      <li><div><h3>En la escena 3D: un Image as Plane</h3><p>Selecciona el plano con el vídeo (1). El origen pasa solo a <b>Planos seleccionados</b> (2). Pulsa <b>Grabar recorte</b> (3).</p><figure><img src="docs/pasos/07_plano_antes.jpg" alt="En la escena 3D: un Image as Plane" loading="lazy"></figure></div></li>
+      <li><div><h3>El plano ya recortado</h3><p>El recorte se cambia dentro del propio material del plano (1), que conserva su sitio y su animación. <b>Devolver la imagen original</b> lo deja como estaba (2).</p><figure><img src="docs/pasos/08_plano_despues.jpg" alt="El plano ya recortado" loading="lazy"></figure></div></li>
     </ol>
     <p style="margin-top:24px"><a class="boton" href="docs/instrucciones.html" style="font-size:22px">Instrucciones completas</a></p>
   </section>
 
-  <section class="marco" id="capturas"><span class="nombre">Capturas</span>
-    <div class="cab"><h2>En Blender</h2><span class="mano">Pruebas reales con una RTX 3050 de 6 GB</span></div>
+  <section class="marco" id="capturas"><span class="nombre">Resultado</span>
+    <div class="cab"><h2>En la ciudad</h2><span class="mano">El mismo plano compuesto en el VSE y en la escena 3D</span></div>
     <div class="capturas">
-      <figure><img src="img/interfaz.jpg" alt="Panel del addon en el editor de secuencias" loading="lazy"><figcaption>El panel en el editor de secuencias</figcaption></figure>
-      <figure><img src="img/prueba_escena.jpg" alt="Image as Plane, planos tipo COLMAP y plano de cámara recortados" loading="lazy"><figcaption>Image as Plane, planos tipo COLMAP y plano de cámara</figcaption></figure>
-      <figure><img src="img/recorte.jpg" alt="Recorte de prueba sobre fondo magenta" loading="lazy"><figcaption>Recorte de prueba sin pista</figcaption></figure>
+      <figure><img src="img/resultado.jpg" alt="La modelo recortada caminando sobre el puente de la ciudad" loading="lazy"><figcaption>Editor de secuencias · recorte sobre la ciudad</figcaption></figure>
+      <figure><img src="img/plano_3d.jpg" alt="Image as Plane recortado dentro de la escena 3D" loading="lazy"><figcaption>Vista 3D · Image as Plane recortado</figcaption></figure>
     </div>
+    <p class="mano" style="margin-top:14px;font-size:10px;color:var(--ceniza)">Vídeo de prueba: «Woman posing on green screen», <a href="https://www.pexels.com/video/woman-posing-on-green-screen-for-creative-projects-29985922/" target="_blank" rel="noopener">Pexels</a> (licencia de Pexels, uso libre). Fondo: render de la ciudad de Pérdida del Alma.</p>
   </section>
 
   <section class="marco" id="creditos"><span class="nombre">Créditos</span>
