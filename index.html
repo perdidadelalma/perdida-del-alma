@@ -311,7 +311,7 @@ Proceso</span><button class="plegar" aria-label="Plegar o desplegar">−</button
   <div class="pie"><button id="vant">← anterior</button><span id="vtxt"></span><button id="vsig">siguiente →</button><button id="vcer">cerrar ✕</button></div>
 </div>
 
-<script type="application/json" id="datos">{"marcos": [], "propio": [], "actualizado": "20 oct", "guion": {"propuesta": {"escenas": [["Pasividad", "", "", ""], ["Poder", "", "", ""], ["Control", "", "", ""], ["Distracción", "", "", ""], ["Discordia", "", "", ""], ["Fractura", "", "", ""]]}}, "desglose": [], "form_casting": "", "casting_envio": "perdidadelalma@proton.me", "modo": "publico"}</script>
+<script type="application/json" id="datos">{"marcos": [], "propio": [], "actualizado": "26 oct", "guion": {"propuesta": {"escenas": [["Pasividad", "", "", ""], ["Poder", "", "", ""], ["Control", "", "", ""], ["Distracción", "", "", ""], ["Discordia", "", "", ""], ["Fractura", "", "", ""]]}}, "desglose": [], "form_casting": "", "casting_envio": "perdidadelalma@proton.me", "modo": "publico"}</script>
 <script>
 const D = JSON.parse(document.getElementById("datos").textContent);
 // ancho de la barra de scroll, para que lo de «a todo el ancho» no se corte por un lado
@@ -330,7 +330,8 @@ const grupos = id => (M[id].bloques.find(b => b.tipo === "grupos") || {items: []
 const IR = [["inicio", "Inicio"], ["escenas", "Escenas"], ["proyecto", "El proyecto"], ["avance", "Avance"], ["guion", "Guion"], ["storyboards", "Storyboards"], ["desglose", "Desglose"], ["referencias", "Referencias"], ["pruebas", D.modo === "publico" ? "Proceso" : "Pruebas"], ["videos", "Vídeos"], ["estudio", "Estudio"], ["participa", "Tutores"], ["casting", "Casting"]]
   .filter(([id]) => document.getElementById(id) && !(D.modo === "publico" && id === "participa"))
   .sort((a, b) => document.getElementById(a[0]).compareDocumentPosition(document.getElementById(b[0])) & 2 ? 1 : -1);
-$("#herr").innerHTML = IR.map(([id, n]) => `<a href="#${id}" data-id="${id}" class="${id === "casting" ? "rojo" : ""}">${n}</a>`).join("") + (D.modo === "publico" ? "" : `<a href="https://miro.com/app/board/uXjVG7sJBJ0=/" target="_blank" rel="noopener">Miro ↗</a>`);
+$("#herr").innerHTML = IR.map(([id, n]) => `<a href="#${id}" data-id="${id}" class="${id === "casting" ? "rojo" : ""}">${n}</a>`).join("") + `<a href="${D.modo === "publico" ? "corridorkey/" : "https://perdidadelalma.github.io/perdida-del-alma/corridorkey/"}">CorridorKey</a>`
+  + (D.modo === "publico" ? "" : `<a href="https://miro.com/app/board/uXjVG7sJBJ0=/" target="_blank" rel="noopener">Miro ↗</a>`);
 
 const escenas = D.guion.propuesta.escenas.map(e => e[0]);
 $("#cinta").innerHTML = [...escenas, ...escenas, ...escenas, ...escenas].map(x => `<span>${esc(x)}</span>`).join("");

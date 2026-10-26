@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CorridorKey para Blender · Instrucciones</title>
+<style>
+@font-face { font-family: "Senal"; src: url("PerdidaSenal.ttf"); }
+@font-face { font-family: "Bloque"; src: url("PerdidaBloque.ttf"); }
+:root {
+  --hormigon: #0a1112; --hormigon2: #111b1d; --hormigon3: #1a272a;
+  --niebla: #a4b4ba; --niebla-osc: #607076; --cian: #4fe3f0;
+}
+* { box-sizing: border-box; }
+html { background: var(--hormigon); }
+body {
+  margin: 0; color: var(--niebla); background: var(--hormigon);
+  font: 17px/1.6 "Segoe UI", system-ui, sans-serif;
+}
+/* líneas de barrido y viñeta, como en las piezas de la cuenta */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55));
+}
+.osd { font-family: Consolas, "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; color: var(--niebla-osc); }
+header { position: relative; min-height: 78vh; display: grid; place-items: end start; padding: 32px max(16px, 6vw); overflow: hidden; }
+header img.fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; filter: contrast(1.05); }
+header .top { position: absolute; top: 22px; left: max(16px, 6vw); right: max(16px, 6vw); display: flex; justify-content: space-between; }
+header .rec::after { content: " ●"; color: var(--cian); animation: parpadeo 1.2s steps(2) infinite; }
+@keyframes parpadeo { 50% { opacity: 0; } }
+h1 { position: relative; font-family: "Senal", Impact, sans-serif; font-weight: normal; line-height: .9; margin: 0 0 12px; font-size: clamp(56px, 13vw, 150px); color: #dfe9eb;
+  text-shadow: -3px 0 rgba(255,40,60,.45), 3px 0 rgba(40,120,255,.45); }
+h1 span { color: var(--cian); }
+.firma { position: relative; font-family: "Bloque", Impact, sans-serif; color: var(--cian); font-size: clamp(20px, 3vw, 30px); letter-spacing: .04em; }
+main { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
+h2 { font-family: "Senal", Impact, sans-serif; font-weight: normal; color: #dfe9eb; font-size: clamp(30px, 5vw, 44px); margin: 64px 0 8px;
+  text-shadow: -2px 0 rgba(255,40,60,.4), 2px 0 rgba(40,120,255,.4); }
+h2 small { display: block; font-family: Consolas, monospace; font-size: 13px; color: var(--cian); letter-spacing: .1em; text-shadow: none; }
+h3 { color: #dfe9eb; margin: 28px 0 4px; font-size: 18px; }
+p, li { max-width: 68ch; }
+a { color: var(--cian); }
+code, kbd { font-family: Consolas, monospace; background: var(--hormigon3); color: #dfe9eb; padding: 1px 6px; border-radius: 3px; font-size: .92em; }
+.paso { display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--hormigon3); }
+.paso .n { font-family: "Senal", Impact, sans-serif; font-size: 40px; color: var(--cian); line-height: 1; }
+.caja { background: var(--hormigon2); border-left: 3px solid var(--cian); padding: 14px 18px; margin: 18px 0; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--hormigon3); vertical-align: top; }
+th { color: var(--cian); font-family: Consolas, monospace; font-weight: normal; text-transform: uppercase; font-size: 12px; letter-spacing: .08em; }
+.tira { display: flex; gap: 8px; margin: 18px 0; }
+.tira img { width: 33.333%; min-width: 0; aspect-ratio: 1; object-fit: cover; }
+footer { text-align: center; padding: 40px 16px 60px; }
+@media (max-width: 560px) { .paso { grid-template-columns: 40px 1fr; } .paso .n { font-size: 30px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="fondo" src="../icons/foto.png" alt="">
+  <div class="top osd"><span>CH-01 · INSTRUCCIONES</span><span class="rec">REC</span></div>
+  <div>
+    <h1>CORRIDOR<br><span>KEY</span></h1>
+    <div class="firma">PARA BLENDER · POR TONIÑO</div>
+    <div class="osd" style="margin-top:8px">Pérdida del Alma · @perdidadelalma</div>
+  </div>
+</header>
+
+<main>
+
+<p>Este addon recorta personas y objetos de su fondo (croma verde, azul o cualquier fondo) con el modelo
+<b>CorridorKey 2.0</b> sin salir de Blender. Eliges el clip, le dices quién es el sujeto si hace falta,
+pulsas <b>Grabar recorte</b> y el resultado vuelve solo a la línea de tiempo o a la escena 3D.</p>
+
+<div class="tira">
+  <img src="../icons/banner_0.png" alt="Fragmento de render con OSD de cámara">
+  <img src="../icons/banner_1.png" alt="Corridor Key">
+  <img src="../icons/banner_2.png" alt="Pérdida del Alma, por Toniño">
+</div>
+
+<h2><small>01 · antes de empezar</small>Qué necesitas</h2>
+<ul>
+  <li>Blender 4.2 o más nuevo (probado en 4.5).</li>
+  <li>Tarjeta gráfica NVIDIA RTX serie 30 o más nueva. Con 4 GB de VRAM llega hasta 1440p; para 4K, 6 GB.</li>
+  <li>Unos 10 GB libres en el disco y conexión a internet para la primera instalación.</li>
+  <li><code>git</code> y Python 3.10–3.13 instalados en el sistema (solo para instalar).</li>
+</ul>
+
+<h2><small>02 · instalación</small>Instalar</h2>
+<div class="paso"><div class="n">1</div><div>
+  En Blender: <b>Editar › Preferencias › Add-ons</b>, flecha de la esquina › <b>Instalar desde disco</b>,
+  y elige <code>corridorkey_blender.zip</code>. Activa <b>CorridorKey para Blender</b>.
+</div></div>
+<div class="paso"><div class="n">2</div><div>
+  En las preferencias del addon pulsa <b>Instalar lo que falta</b>. Descarga el código de CorridorKey,
+  PyTorch con CUDA, los pesos del modelo (unos 5 GB) y ffmpeg en <code>C:\Users\&lt;tú&gt;\CorridorKey2</code>.
+  El avance se ve en la misma ventana; Blender sigue funcionando mientras tanto.
+</div></div>
+<div class="paso"><div class="n">3</div><div>
+  Cuando todos los puntos de la <b>comprobación de señal</b> estén en verde, ya puedes recortar.
+</div></div>
+
+<h2><small>03 · el panel</small>Dónde está</h2>
+<p>Pulsa <kbd>N</kbd> en el <b>Editor de secuencias</b>, en el <b>Editor de clips</b> o en la <b>Vista 3D</b>
+y abre la pestaña <b>CorridorKey</b>. Arriba está el tríptico, debajo el botón grande y las secciones.</p>
+
+<table>
+<tr><th>Sección</th><th>Para qué sirve</th></tr>
+<tr><td>Origen</td><td>Qué se recorta. En <i>Automático</i> usa la tira activa del VSE o el clip abierto en el editor de clips; en la Vista 3D, los planos seleccionados, el fondo de la cámara o un archivo. <i>Solo los primeros</i> procesa N fotogramas para probar rápido.</td></tr>
+<tr><td>Pista del sujeto</td><td>Opcional. Le dice al modelo a quién quieres conservar (ver abajo).</td></tr>
+<tr><td>Salida</td><td>Qué archivos sacar, en qué formato, cuánto derrame verde quitar y qué hacer al acabar.</td></tr>
+<tr><td>Memoria de la GPU</td><td>Normalmente en <i>Automática</i>. Si da error de memoria, <i>Poca VRAM</i>.</td></tr>
+<tr><td>Cintas</td><td>Los trabajos en marcha y terminados, con su progreso, carpeta y registro.</td></tr>
+<tr><td>Señal</td><td>Créditos, enlaces y estas instrucciones.</td></tr>
+</table>
+
+<h2><small>04 · uso</small>Recortar un plano</h2>
+<div class="paso"><div class="n">1</div><div>Mete el clip en el <b>Editor de secuencias</b> (Añadir › Película o Imagen/secuencia) y selecciónalo.</div></div>
+<div class="paso"><div class="n">2</div><div>Si el plano es sencillo, deja la pista en <b>Sin pista</b>. Si hay varias personas o el modelo se equivoca de sujeto, usa una máscara (paso siguiente).</div></div>
+<div class="paso"><div class="n">3</div><div>Pon <b>Solo los primeros</b> a 24 y pulsa <b>Grabar recorte</b> para ver una prueba en pocos segundos.</div></div>
+<div class="paso"><div class="n">4</div><div>Si la prueba te convence, vuelve a poner <b>Solo los primeros</b> a 0 y graba el plano entero. Mientras tanto puedes seguir trabajando; si lanzas más, se ponen en cola.</div></div>
+<div class="paso"><div class="n">5</div><div>Al terminar, el recorte aparece en un canal encima del original con <i>Alpha Over</i>. Si marcaste <b>Plano en 3D</b>, también se crea un plano con el recorte animado, listo para colocarlo en una escena.</div></div>
+
+<h2><small>05 · escena 3D y colmap</small>Recortar dentro de la escena</h2>
+<p>No hace falta exportar nada: el addon recorta lo que ya está en la escena y deja el resultado en el mismo sitio.
+En la <b>Vista 3D</b>, con el origen en <i>Automático</i>, mira lo que tienes seleccionado.</p>
+
+<h3>Un plano de imagen (Image as Plane)</h3>
+<p>Importa el vídeo o la secuencia con <b>Añadir › Imagen › Malla plana</b> (Image as Plane), selecciona el plano y pulsa
+<b>Grabar recorte</b>. Al terminar, la imagen del plano se cambia por el recorte dentro de su propio material y se conecta la
+transparencia. El plano conserva su posición, su escala y su animación: puedes moverlo, iluminarlo y renderizarlo con la escena.</p>
+
+<h3>Los planos de COLMAP</h3>
+<p>Al importar una reconstrucción de COLMAP con <b>Photogrammetry Importer</b> y la opción <i>Add image planes</i>, cada cámara trae
+un plano con su foto. Selecciona todos los planos que quieras y graba el recorte: se procesan juntos, en orden de nombre de archivo,
+para que el modelo aproveche la continuidad del plano. Cada plano recibe su propio fotograma recortado.</p>
+
+<h3>La cámara animada de COLMAP</h3>
+<p>Con <i>Add animated camera background images</i>, la cámara animada lleva el plano de rodaje como imagen de fondo. Selecciona
+esa cámara (origen <b>Fondo de la cámara</b>) y graba el recorte:</p>
+<ul>
+  <li>El recorte se añade como un segundo fondo, delante, para ver al actor sobre lo 3D en el visor.</li>
+  <li>Con <b>Plano pegado a la cámara</b> se crea un plano hijo de la cámara que llena el encuadre a la distancia que elijas.
+  Sale en el render, así que el actor queda compuesto sobre la escena 3D con el mismo movimiento de cámara que resolvió COLMAP.
+  Ponlo más cerca o más lejos para decidir qué objetos 3D le pasan por delante.</li>
+</ul>
+
+<h3>Compositor</h3>
+<p>Con <b>Salida › Nodos en el compositor</b>, el addon añade un nodo Imagen con el recorte y un <i>Alpha Over</i> encima de lo que
+ya llegaba a la salida del compositor (normalmente las capas de render). Sirve para componer al actor sobre el render final.</p>
+
+<div class="caja"><b>Volver atrás:</b> si un plano ya tiene el recorte, en <b>Origen</b> aparece <b>Devolver la imagen original</b>,
+que deja la imagen y el material como estaban.</div>
+
+<h2><small>06 · pista</small>Marcar al sujeto con una máscara</h2>
+<p>La forma más cómoda de indicar quién es el sujeto es dibujarlo con las máscaras de Blender:</p>
+<ol>
+  <li>Abre el clip en el <b>Editor de clips</b> y cambia el modo de <i>Seguimiento</i> a <b>Máscara</b>.</li>
+  <li>Crea una máscara nueva y, en el <b>primer fotograma del clip</b>, rodea al sujeto con <kbd>Ctrl</kbd> + clic. No hace falta precisión: basta con un contorno que lo envuelva.</li>
+  <li>En el panel, <b>Pista del sujeto › Modo › Máscara, primer fotograma</b> y elige la máscara.</li>
+  <li>Si la máscara está animada a lo largo del plano (roto o máscara basura), usa <b>Máscara, todo el clip</b>.</li>
+</ol>
+<div class="caja"><b>Confianza en la pista:</b> 0,95 si la máscara es buena; 0,75 si es aproximada; 0,5 o menos si es un borrón.
+Con confianza alta el modelo obedece la máscara aunque se pase de grande: una máscara rectangular enorme deja un rectángulo de fondo.
+Si la máscara es tosca, baja la confianza.</div>
+
+<h2><small>07 · salida</small>Qué sale</h2>
+<table>
+<tr><th>Salida</th><th>Contenido</th></tr>
+<tr><td>Recorte</td><td>Color del sujeto sin derrame y con transparencia (sin premultiplicar). Es el que se coloca en el VSE y en el plano.</td></tr>
+<tr><td>Alfa</td><td>Solo el mate en blanco y negro, para usarlo como máscara en el compositor.</td></tr>
+<tr><td>Frente</td><td>Color del sujeto tal cual lo predice el modelo, sin quitar el derrame.</td></tr>
+<tr><td>Damero</td><td>Vista previa sobre damero, para revisar bordes.</td></tr>
+</table>
+<p><b>EXR</b> guarda secuencias en HDR lineal, lo mejor para componer. <b>Vídeo</b> guarda MP4 y ProRes 4444 con alfa, más ligero.
+Cada trabajo deja su carpeta en <code>//corridorkey/&lt;clip&gt;_v001/</code>, junto al .blend, con los resultados y el registro <code>corridorkey_log.txt</code>.</p>
+
+<h2><small>08 · problemas</small>Si algo falla</h2>
+<table>
+<tr><th>Síntoma</th><th>Qué hacer</th></tr>
+<tr><td>«Sin señal: CorridorKey no está instalado»</td><td>Preferencias del addon › <b>Instalar lo que falta</b>. Si ya lo instalaste en otra carpeta, cámbiala en <i>Carpeta de CorridorKey</i>.</td></tr>
+<tr><td>Error de memoria (CUDA out of memory)</td><td>Cierra otros programas que usen la GPU y pon <b>Memoria › Poca VRAM</b>, o <i>Manual</i> con ventana 4 y paso 2.</td></tr>
+<tr><td>Recorta a quien no es</td><td>Usa una pista con máscara sobre el sujeto correcto.</td></tr>
+<tr><td>Bordes con verde</td><td>Sube <b>Quitar derrame</b> a 0,75 o más.</td></tr>
+<tr><td>Cualquier otro error</td><td>En <b>Cintas</b>, el icono de texto abre el registro del trabajo con el mensaje completo.</td></tr>
+</table>
+
+<h2><small>09 · cómo se hizo</small>Modo de trabajo</h2>
+<p>El addon se hizo en una sola jornada de trabajo, el 26 de octubre de 2026, con este reparto:</p>
+<table>
+<tr><th>Quién</th><th>Qué</th></tr>
+<tr><td>Toniño</td><td>La idea, qué tenía que hacer y para qué (recortar dentro de Blender, en el VSE, en los <i>Image as Plane</i> y con COLMAP), la estética de Pérdida del Alma, el nombre y las decisiones sobre la marcha: firmar como Toniño, usar fotos del proyecto, que el estilo afecte solo al addon y no a todo Blender, probarlo en Blender 5.0.</td></tr>
+<tr><td>Claude Code</td><td>El asistente de programación con IA de Anthropic. Leyó el repositorio de CorridorKey, propuso la arquitectura, escribió el código, las imágenes de la marca y estas instrucciones, e hizo las pruebas.</td></tr>
+</table>
+
+<h3>El ciclo de trabajo</h3>
+<ol>
+  <li><b>Leer el modelo.</b> Se clonó el repositorio de CorridorKey 2.0 y se estudió <code>infer.py</code>: qué argumentos acepta, qué escribe y qué mensajes imprime, para luego convertirlos en la barra de progreso.</li>
+  <li><b>Diseñar.</b> Se decidió llamar al modelo como proceso externo con su propio entorno (PyTorch no cabe en el Python de Blender) y lanzarlo en segundo plano con una cola, sin congelar Blender.</li>
+  <li><b>Escribir por módulos.</b> <code>setup.py</code> (instalación), <code>jobs.py</code> (cola), <code>keying.py</code> (preparar e importar), <code>mask_hint.py</code> (máscaras como pista), <code>scene_targets.py</code> (planos, COLMAP, compositor) y <code>ui.py</code> (panel).</li>
+  <li><b>Probar sin interfaz.</b> Scripts que abren Blender en segundo plano (<code>blender -b --python</code>), montan una escena, ejecutan el addon y escriben el resultado. Con un plano de croma sintético renderizado en Blender (una cabeza girando sobre verde).</li>
+  <li><b>Recortes reales.</b> El instalador del propio addon instaló CorridorKey en el PC1, y los recortes se lanzaron de verdad en la RTX 3050: VSE, <i>Image as Plane</i>, planos tipo COLMAP y cámara. Cada render se revisó a ojo.</li>
+  <li><b>Probar en el Blender abierto.</b> Mediante el puerto del addon MCP (9876) se activó el addon en el Blender de Toniño y se sacaron capturas del panel para revisar cómo se veía.</li>
+  <li><b>Corregir y repetir.</b> Cada fallo encontrado (instalación invisible en <code>AppData</code>, banner cortado, tamaño 0×0 en secuencias, imágenes reutilizadas en COLMAP, el tema global) se corrigió y se volvió a probar.</li>
+  <li><b>Otra versión de Blender.</b> Se descargó Blender 5.0.1 portable (comprobando su suma SHA-256 oficial) y se repitieron las pruebas, sobre todo por el compositor nuevo.</li>
+</ol>
+
+<h3>La imagen</h3>
+<p>El tríptico, la foto, el logo y los iconos los genera <code>tools/make_brand.py</code> con Python (Pillow). Reutiliza las funciones de las piezas de Instagram del proyecto (<code>generar_piezas.py</code>: etalonaje, efecto VHS y fondo de niebla), las fuentes Perdida Señal y Perdida Bloque y fragmentos de los renders sin el protagonista. Para cambiar la imagen, se edita ese script y se vuelve a ejecutar.</p>
+
+<h2><small>10 · créditos</small>Créditos y licencia</h2>
+<p>Addon, interfaz e imagen: <b>Toniño</b>, para <a href="https://www.instagram.com/perdidadelalma/">Pérdida del Alma</a>
+(<a href="https://perdidadelalma.github.io/perdida-del-alma/">web</a>).
+Modelo CorridorKey 2.0: Zachary Harris y Corridor Digital
+(<a href="https://github.com/nikopueringer/CorridorKey2.0">repositorio</a>), con licencia propia: uso libre también en trabajos
+comerciales, pero no se puede vender ni ofrecer como servicio de pago, y lo que se publique debe mantener el nombre CorridorKey.
+El addon es GPL-3.0.</p>
+
+</main>
+<footer class="osd">PÉRDIDA DEL ALMA · ¿SIGUES AHÍ?</footer>
+</body>
+</html>
