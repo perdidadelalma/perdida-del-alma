@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RASTRO · Instrucciones</title>
+<style>
+@font-face { font-family: "Senal"; src: url("PerdidaSenal.ttf"); }
+@font-face { font-family: "Bloque"; src: url("PerdidaBloque.ttf"); }
+:root {
+  --hormigon: #0a1112; --hormigon2: #111b1d; --hormigon3: #1a272a;
+  --niebla: #a4b4ba; --niebla-osc: #607076; --cian: #4fe3f0;
+}
+* { box-sizing: border-box; }
+html { background: var(--hormigon); }
+body {
+  margin: 0; color: var(--niebla); background: var(--hormigon);
+  font: 17px/1.6 "Segoe UI", system-ui, sans-serif;
+}
+/* líneas de barrido y viñeta, como en las piezas de la cuenta */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55));
+}
+.osd { font-family: Consolas, "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; color: var(--niebla-osc); }
+header { position: relative; min-height: 78vh; display: grid; place-items: end start; padding: 32px max(16px, 6vw); overflow: hidden; }
+header img.fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; filter: contrast(1.05); }
+header .top { position: absolute; top: 22px; left: max(16px, 6vw); right: max(16px, 6vw); display: flex; justify-content: space-between; }
+header .rec::after { content: " ●"; color: var(--cian); animation: parpadeo 1.2s steps(2) infinite; }
+@keyframes parpadeo { 50% { opacity: 0; } }
+h1 { position: relative; font-family: "Senal", Impact, sans-serif; font-weight: normal; line-height: .9; margin: 0 0 12px; font-size: clamp(56px, 13vw, 150px); color: #dfe9eb;
+  text-shadow: -3px 0 rgba(255,40,60,.45), 3px 0 rgba(40,120,255,.45); }
+h1 span { color: var(--cian); }
+.firma { position: relative; font-family: "Bloque", Impact, sans-serif; color: var(--cian); font-size: clamp(20px, 3vw, 30px); letter-spacing: .04em; }
+main { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
+h2 { font-family: "Senal", Impact, sans-serif; font-weight: normal; color: #dfe9eb; font-size: clamp(30px, 5vw, 44px); margin: 64px 0 8px;
+  text-shadow: -2px 0 rgba(255,40,60,.4), 2px 0 rgba(40,120,255,.4); }
+h2 small { display: block; font-family: Consolas, monospace; font-size: 13px; color: var(--cian); letter-spacing: .1em; text-shadow: none; }
+h3 { color: #dfe9eb; margin: 28px 0 4px; font-size: 18px; }
+p, li { max-width: 68ch; }
+a { color: var(--cian); }
+code, kbd { font-family: Consolas, monospace; background: var(--hormigon3); color: #dfe9eb; padding: 1px 6px; border-radius: 3px; font-size: .92em; }
+.paso { display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--hormigon3); }
+.paso .n { font-family: "Senal", Impact, sans-serif; font-size: 40px; color: var(--cian); line-height: 1; }
+.caja { background: var(--hormigon2); border-left: 3px solid var(--cian); padding: 14px 18px; margin: 18px 0; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--hormigon3); vertical-align: top; }
+th { color: var(--cian); font-family: Consolas, monospace; font-weight: normal; text-transform: uppercase; font-size: 12px; letter-spacing: .08em; }
+.tira { display: flex; gap: 8px; margin: 18px 0; }
+.tira img { width: 33.333%; min-width: 0; aspect-ratio: 1; object-fit: cover; }
+footer { text-align: center; padding: 40px 16px 60px; }
+figure.cap { margin: 14px 0 26px; background: var(--hormigon2); }
+figure.cap img { width: auto; max-width: 100%; height: auto; display: block; border: 1px solid var(--hormigon3); }
+figure.cap figcaption { font: 13px/1.4 Consolas, monospace; color: var(--niebla-osc); padding: 8px 12px; }
+@media (max-width: 560px) { .paso { grid-template-columns: 40px 1fr; } .paso .n { font-size: 30px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="fondo" src="../icons/foto.png" alt="">
+  <div class="top osd"><span>CH-03 · INSTRUCCIONES</span><span class="rec">REC</span></div>
+  <div>
+    <h1>RASTRO<br><span>CÁMARA REAL</span></h1>
+    <div class="firma">PARA BLENDER · POR TONIÑO</div>
+    <div class="osd" style="margin-top:8px">Pérdida del Alma · @perdidadelalma · addon n.º 03</div>
+  </div>
+</header>
+
+<main>
+
+<p>RASTRO es un plató virtual sencillo: la cámara con la que ruedas mueve la cámara de Blender, para ver al actor dentro del
+decorado mientras grabas y para tener después el movimiento exacto con el que rematar el plano. Hace lo esencial de los
+sistemas profesionales (Pixotope y compañía) sin su complicación: un móvil, unos marcadores impresos o una GoPro.</p>
+
+<h2><small>01 · qué necesitas</small>Antes de empezar</h2>
+<ul>
+  <li>Blender 4.2 o más nuevo (probado en 4.5 y 5.0). Mejor una gráfica decente para ver el decorado en directo.</li>
+  <li>Según cómo trackees: un móvil Android o un iPhone, una webcam y papel, o una GoPro.</li>
+  <li>La primera vez, internet: el addon instala solo OpenCV y cryptography en <code>~/RASTRO/libs</code> (botón <b>Instalar lo que falta</b>).</li>
+</ul>
+
+<h2><small>02 · instalación</small>Instalar</h2>
+<div class="paso"><div class="n">1</div><div><b>Editar › Preferencias › Complementos</b> › flecha › <b>Instalar desde el disco</b> › <code>rastro.zip</code>, y actívalo.</div></div>
+<div class="paso"><div class="n">2</div><div>En la vista 3D, <kbd>N</kbd> › pestaña <b>Rastro</b> › <b>Instalar lo que falta</b> (una vez).</div></div>
+<div class="paso"><div class="n">3</div><div>En las preferencias del addon puedes decirle dónde están <b>ffmpeg</b> y <b>COLMAP</b>; si no, los busca solo.</div></div>
+
+<h2><small>03 · cámara real</small>Tu cámara en Blender</h2>
+<p>Pulsa <b>Elegir cámara</b> y busca la tuya: el catálogo tiene 57 cámaras y 82 modos de grabación
+(ARRI, Apple, Blackmagic, Canon, DJI, Fujifilm, GoPro, Google, Nikon, Panasonic, RED, Samsung, Sony). Cada modo lleva el tamaño de sensor que usa de verdad (en vídeo muchas cámaras recortan), su resolución
+y sus fps; la cámara de Blender se queda igual. Solo falta poner el <b>objetivo</b> en milímetros.
+Si la tuya no está, <b>Cámara nueva</b>: marca, modelo, sensor y resolución.</p>
+<figure class="cap"><img src="pasos/panel_directo.jpg" alt="Panel de RASTRO" style="max-width:420px"><figcaption>Cámara real (una ARRI ALEXA Mini LF en UHD) y el directo esperando al móvil.</figcaption></figure>
+
+<h2><small>04 · directo</small>Que la cámara de Blender siga a la real</h2>
+<p>Elige la fuente en <b>Directo</b>, pulsa <b>Conectar</b>, apunta la cámara real a algo y pulsa <b>Poner a cero</b>: desde ese momento la
+cámara de Blender se mueve igual que la real, partiendo de donde la tenías.</p>
+<h3>Móvil Android (posición y giro)</h3>
+<div class="paso"><div class="n">1</div><div>Sujeta el móvil encima de la cámara, con la cámara trasera mirando a donde mira el objetivo.</div></div>
+<div class="paso"><div class="n">2</div><div>Móvil y ordenador en la misma wifi. Abre en Chrome la dirección que sale en el panel (<code>https://…:8443</code>), acepta el aviso del certificado y pulsa <b>Android</b> › <b>Empezar</b>.</div></div>
+<div class="paso"><div class="n">3</div><div>Mueve un poco el móvil para que reconozca el plató. Necesita un Android con ARCore.</div></div>
+<h3>iPhone</h3>
+<p>Safari no deja usar la realidad aumentada desde una web, así que hay dos maneras:</p>
+<ul>
+  <li><b>Solo giro, sin instalar nada:</b> la misma dirección › <b>iPhone</b> › <b>Empezar</b> y permitir el movimiento. Para planos en trípode o cabeza que gira. Indica en el panel cómo va puesto el móvil.</li>
+  <li><b>Posición y giro:</b> una app que mande <b>FreeD</b> (FREED Tracker, VRL Cam…) a la IP del ordenador, puerto <b>40000</b>, y en el panel la fuente <b>FreeD</b>.</li>
+</ul>
+<figure class="cap"><img src="pasos/movil.jpg" alt="Páginas del móvil"><figcaption>Lo que se ve en el móvil: inicio, Android e iPhone.</figcaption></figure>
+<h3>FreeD</h3>
+<p>El protocolo de los platós virtuales: además de las apps de iPhone lo mandan trackers profesionales y cámaras robotizadas (PTZ).
+Si algún eje va al revés, usa <b>Invertir pan / tilt / roll</b>.</p>
+<h3>Ajustes</h3>
+<ul>
+  <li><b>Suavizado:</b> quita el temblor con la cámara quieta sin retrasar los movimientos rápidos.</li>
+  <li><b>Retraso:</b> la imagen de la cámara suele llegar más tarde que el tracking; retrásalo hasta que casen.</li>
+  <li><b>Escala:</b> 1 = un metro del plató es un metro en Blender. Para decorados enormes, más.</li>
+  <li><b>Móvil respecto al objetivo (cm):</b> dónde va el móvil visto desde la cámara (X derecha, Y arriba, Z hacia atrás).</li>
+</ul>
+
+<h2><small>05 · marcadores</small>Con papel y una webcam</h2>
+<p>Lo más fiable sin móvil: una webcam encima de la cámara <b>mirando al techo</b>, donde se pegan los marcadores. No salen en la toma
+y el actor no los tapa. También se pueden poner en el croma con la webcam mirando al frente.</p>
+<div class="caja"><b>Sin webcam, o con un Android sin ARCore:</b> en <b>Cámara que ve los marcadores</b> elige <b>Cámara del móvil</b>.
+Al conectar sale un QR: el móvil abre la página «Cámara del móvil», pulsa Empezar y manda lo que ve su cámara trasera (por la
+wifi o por Tailscale). Vale cualquier móvil; la calibración se hace igual, enseñándole el tablero.</div>
+<div class="paso"><div class="n">1</div><div><b>Marcadores para imprimir</b>: hace las hojas A4 a tamaño real y el tablero de calibración. Imprime al 100 % y mide el lado del cuadrado negro.</div></div>
+<div class="paso"><div class="n">2</div><div><b>Calibrar webcam</b>: enséñale el tablero desde unas 20 posiciones distintas (se guarda solo).</div></div>
+<div class="paso"><div class="n">3</div><div>Pega el marcador <b>0</b> (es el origen) y los demás alrededor. Los demás se aprenden solos al verlos junto a uno conocido. Si se mueven, <b>Olvidar marcadores</b>.</div></div>
+<h3>Dónde ponerlos</h3>
+<p>Pon la <b>distancia</b> de la cámara al techo (o a la pared / al suelo) y pulsa <b>Dónde poner los marcadores</b>. RASTRO calcula
+cuántos hacen falta, a qué separación y de qué tamaño para que la cámara vea siempre dos o más en la zona por donde se mueve
+(su animación, o el ancho × fondo que le digas). Los coloca en la escena, abre la carpeta para imprimir con las hojas justas
+y un <b>plano con las medidas desde el marcador 0</b>, y pone el «ARRIBA» de cada hoja hacia el decorado.</p>
+<p>Mientras mueves la cámara, si ve menos de dos marcadores, RASTRO pone en la escena un cuadrado <b>«aquí falta un marcador»</b>
+donde apunta y te dice en el móvil y en el panel <b>qué número pegar ahí</b> (el del plan que toca, o el siguiente libre). Recorre el
+movimiento del plano antes de rodar y ve rellenando huecos. <b>Abrir carpeta de marcadores</b> abre en el Explorador
+<b>RASTRO_imprimir.pdf</b>: el plano, las hojas y el tablero juntos, para imprimir de una vez a <b>tamaño real</b>.</p>
+<p>El <b>marcador 0 de la escena</b> es el ancla: donde esté en Blender es donde está el 0 en el plató. Así todas las tomas, y todos
+los días, caen en el mismo sitio sin poner a cero. Para mover el decorado respecto al plató, mueve la colección del plan.</p>
+<div class="tira"><img src="pasos/hoja_marcadores.jpg" alt="Hoja de marcadores"><img src="pasos/tablero.jpg" alt="Tablero de calibración"></div>
+<figure class="cap"><img src="pasos/panel_marcadores_gopro.jpg" alt="Marcadores y GoPro en el panel" style="max-width:420px"><figcaption>Las secciones de marcadores y de GoPro + COLMAP.</figcaption></figure>
+
+<h2><small>06 · toma</small>Grabar el movimiento</h2>
+<p><b>Grabar toma</b> mientras ruedas y <b>Parar</b> al acabar: el movimiento queda como fotogramas clave en la cámara (uno por fotograma,
+a los fps de la escena) y en <code>//rastro/toma_NNN.json</code>. Después se renderiza el decorado con ese movimiento y se compone el
+actor recortado con CorridorKey.</p>
+
+<h3>Con claqueta</h3>
+<p>Deja marcada en el móvil la casilla <b>Escuchar la claqueta</b> y en Blender pulsa <b>Esperar la claqueta</b>. Al oír el golpe,
+el móvil avisa y la toma empieza en ese instante, en el fotograma en el que estés: en el montaje, pon ahí el golpe de la claqueta
+del clip de la cámara y casan solos.</p>
+<p>La toma acaba al decir <b>«¡corten!»</b> (el móvil lo reconoce) o con el botón <b>¡CORTEN!</b> del móvil, y se queda esperando la
+siguiente claqueta. Cada toma es <b>su propia cámara</b>, «RASTRO P01 T03» (plano y toma, como en la escaleta), en la colección
+«RASTRO · tomas»; el plano se cambia en el panel o con − / + en el móvil. En el móvil sale el listado de tomas para marcar cada una
+como <b>buena ✔</b> o <b>mala ✘</b>: se ve en el nombre de la cámara, en el panel y en su .json.</p>
+
+<h2><small>07 · GoPro + COLMAP</small>El movimiento bueno, después</h2>
+<p>Lo que mejor sale y lo que menos complica el rodaje: una GoPro fija encima de la cámara, grabando a la vez. Su gran angular ve
+el plató alrededor y COLMAP saca el movimiento con precisión.</p>
+<div class="paso"><div class="n">1</div><div>En el plató: GoPro en modo ancho, estabilización apagada, mismos fps que la cámara y una <b>palmada</b> al empezar cada toma.</div></div>
+<div class="paso"><div class="n">2</div><div>En Blender: elige el vídeo de la GoPro y (opcional) el de la cámara. Pulsa <b>Sacar la cámara con COLMAP</b>: busca la palmada, saca los fotogramas, lanza COLMAP y anima la cámara con el vídeo de la cámara de fondo.</div></div>
+<div class="paso"><div class="n">3</div><div>COLMAP no sabe medir: con <b>Escala por distancia conocida</b> dile cuánto se movió de verdad la cámara entre dos fotogramas (un travelling de vía, unos pasos medidos).</div></div>
+<div class="caja">Para que COLMAP funcione, la GoPro tiene que ver cosas fijas con textura (techo, focos, paredes) y el plató no debe moverse. Si el croma ocupa todo, inclínala hacia arriba y pon esa inclinación en <b>GoPro inclinada</b>.</div>
+
+<h2><small>08 · problemas</small>Si algo falla</h2>
+<table>
+<tr><th>Pasa esto</th><th>Haz esto</th></tr>
+<tr><td>El móvil no abre la dirección o se queda cargando</td><td>Misma wifi. En Windows la red de casa tiene que estar como <b>Privada</b> (Configuración › Red e Internet › Propiedades › Perfil de red): en una red Pública el firewall bloquea a Blender. La primera vez, acepta el permiso del firewall.</td></tr>
+<tr><td>«Sin señal del móvil»</td><td>En el móvil pulsa Empezar; en Android hay que mover un poco el móvil hasta que reconozca el plató.</td></tr>
+<tr><td>La cámara gira al revés</td><td>iPhone: cambia «Móvil en el soporte». FreeD: Invertir pan / tilt / roll.</td></tr>
+<tr><td>Tiembla</td><td>Sube el suavizado. Con marcadores, más marcadores a la vista y la webcam calibrada.</td></tr>
+<tr><td>COLMAP no reconstruye</td><td>La GoPro tiene que moverse algo y ver plató con textura; prueba con menos duración y más luz.</td></tr>
+</table>
+
+<h2><small>09 · cómo se hizo</small>Modo de trabajo</h2>
+<p>Como los otros addons, lo desarrollé con Claude Code: yo decidía qué tenía que hacer en el plató y el asistente escribía el código y
+lo probaba sin interfaz (móvil y FreeD simulados, marcadores en imágenes sintéticas, la palmada en sonido de prueba) y con mi propio
+vídeo de GoPro de la zapatilla, donde COLMAP registró los 144 fotogramas de la prueba.</p>
+
+<h2><small>10 · créditos</small>Créditos</h2>
+<p>RASTRO · Cámara real, por Toniño, para el TFG <i>Pérdida del Alma</i>. GPL 3.0 o posterior. Usa OpenCV (marcadores ArUco),
+COLMAP (Schönberger y Frahm) y ffmpeg. Los datos de las cámaras son de las fichas públicas de cada fabricante, aproximados.</p>
+
+</main>
+<footer class="osd">RASTRO · por Toniño · <a href="https://www.instagram.com/perdidadelalma/">@perdidadelalma</a></footer>
+</body>
+</html>

@@ -173,6 +173,17 @@ td.esc{font:400 22px var(--mono);text-transform:uppercase;color:var(--rojo)}
 .inscripcion .boton:disabled{background:var(--junta);color:var(--ceniza);cursor:default}
 .inscripcion.enviado label,.inscripcion.enviado .boton{display:none}
 @media (max-width:560px){.inscripcion label.corto{grid-column:1/-1}}
+/* casting como el reel «Pantallas vacías»: muro de teles que se encienden y apagan detrás; el texto, a la izquierda sobre un degradado */
+.casting.muro{position:relative;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,110px) clamp(16px,4vw,56px);background:#05090a!important;box-shadow:inset 0 3px 0 var(--rojo)}
+.muro-tv{position:absolute;inset:0;width:100%;height:100%;z-index:-2;display:block}
+.casting.muro::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(5,9,10,.97) 0%,rgba(5,9,10,.93) 38%,rgba(5,9,10,.55) 62%,rgba(5,9,10,.1) 100%)}
+.muro-osd{position:absolute;top:14px;left:clamp(16px,4vw,56px);right:18px;display:flex;justify-content:space-between;font:500 11px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--niebla);opacity:.75;pointer-events:none}
+.muro-banda{max-width:640px}
+.muro h2{margin:12px 0 8px}
+.muro-cuenta{display:flex;align-items:baseline;gap:14px;margin:0 0 20px;font:500 12px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--ceniza)}
+.muro-cuenta b{font:400 clamp(48px,7vw,80px)/1 var(--mono);color:var(--hueso);min-width:2ch}
+@media (max-width:820px){.casting.muro::before{background:rgba(5,9,10,.84)}}
 
 .visor{position:fixed;inset:0;z-index:50;background:rgba(5,5,5,.96);display:grid;grid-template-rows:minmax(0,1fr) auto;place-items:center;gap:14px;
   padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fun .35s}
@@ -291,10 +302,11 @@ p{max-width:70ch}
     <div class="fichas">
       <a class="ficha-d" href="../corridorkey/"><span class="num">N.º 01</span><div class="img"><img src="../corridorkey/icons/banner_0.png" alt="" loading="lazy"><img src="../corridorkey/icons/banner_1.png" alt="" loading="lazy"><img src="../corridorkey/icons/banner_2.png" alt="" loading="lazy"></div><div class="txt"><div class="chips"><span class="">Addon de Blender</span><span class="on">Gratis</span><span class="">GPL-3.0</span><span class="">Blender 4.2 – 5.0</span></div><h3>CorridorKey para Blender</h3><p>Recorta croma con el modelo de IA CorridorKey 2.0 sin salir de Blender: en el editor de secuencias, en los planos de imagen de la escena y en las cámaras de COLMAP. Con instrucciones paso a paso.</p><span class="ir">Ver, descargar e instrucciones →</span></div></a>
       <a class="ficha-d" href="../plato/"><span class="num">N.º 02</span><div class="img"><img src="../plato/icons/banner_0.png" alt="" loading="lazy"><img src="../plato/icons/banner_1.png" alt="" loading="lazy"><img src="../plato/icons/banner_2.png" alt="" loading="lazy"></div><div class="txt"><div class="chips"><span class="">Addon de Blender</span><span class="on">Gratis</span><span class="">GPL-3.0</span><span class="">Blender 4.2 – 5.0</span></div><h3>PLATÓ · Iluminación real</h3><p>Mide la luz que llega a la cara del actor en la escena y la traduce a focos reales de plató: posición, altura, modificador, potencia y color, con hoja para imprimir o para la tablet. Y al revés.</p><span class="ir">Ver, descargar e instrucciones →</span></div></a>
+      <a class="ficha-d" href="../rastro/"><span class="num">N.º 03</span><div class="img"><img src="../rastro/icons/banner_0.png" alt="" loading="lazy"><img src="../rastro/icons/banner_1.png" alt="" loading="lazy"><img src="../rastro/icons/banner_2.png" alt="" loading="lazy"></div><div class="txt"><div class="chips"><span class="">Addon de Blender</span><span class="on">Gratis</span><span class="">GPL-3.0</span><span class="">Blender 4.2 – 5.0</span></div><h3>RASTRO · Cámara real</h3><p>Plató virtual sencillo: la cámara de rodaje mueve la de Blender con un móvil (Android o iPhone), FreeD, marcadores impresos o una GoPro con COLMAP. Con catálogo de cámaras reales, de móviles a ARRI.</p><span class="ir">Ver, descargar e instrucciones →</span></div></a>
     </div>
   </section>
 
-  <p class="pie-final">Pérdida del Alma · addons · actualizado 26 oct 2026</p>
+  <p class="pie-final">Pérdida del Alma · addons · actualizado 27 oct 2026</p>
 </div>
 </body>
 </html>
