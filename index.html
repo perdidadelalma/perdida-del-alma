@@ -171,6 +171,16 @@ td.esc{font:400 22px var(--mono);text-transform:uppercase;color:var(--rojo)}
 .inscripcion .boton:disabled{background:var(--junta);color:var(--ceniza);cursor:default}
 .inscripcion.enviado label,.inscripcion.enviado .boton{display:none}
 @media (max-width:560px){.inscripcion label.corto{grid-column:1/-1}}
+/* casting como el reel «Pantallas vacías»: muro de teles detrás y una banda oscura delante */
+@font-face{font-family:"Perdida Senal";src:url("fuentes/PerdidaSenal.ttf") format("truetype");font-display:swap}
+.casting.muro{position:relative;overflow:hidden;isolation:isolate;padding:clamp(60px,9vw,120px) clamp(12px,4vw,56px);background:#05090a!important;box-shadow:inset 0 3px 0 var(--rojo)}
+.muro-tv{position:absolute;inset:0;width:100%;height:100%;z-index:-1;display:block}
+.muro-osd{position:absolute;top:14px;left:18px;right:18px;display:flex;justify-content:space-between;font:500 11px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--niebla);opacity:.75;pointer-events:none}
+.muro-banda{max-width:780px;margin:0 auto;background:rgba(6,10,11,.9);padding:clamp(22px,4vw,44px);box-shadow:0 0 0 1px var(--junta),0 30px 80px rgba(0,0,0,.6);backdrop-filter:blur(2px)}
+.muro h2{font-family:"Perdida Senal",var(--mono);font-size:clamp(64px,12vw,150px);line-height:.95;letter-spacing:.02em;margin:10px 0 6px}
+.muro-cuenta{display:flex;align-items:baseline;gap:14px;margin:0 0 18px;font:500 12px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--ceniza)}
+.muro-cuenta b{font:400 clamp(54px,8vw,92px)/1 "Perdida Senal",var(--mono);color:var(--hueso);min-width:2ch}
+.muro .inscripcion .boton{font-family:"Perdida Senal",var(--mono);letter-spacing:.06em}
 
 .visor{position:fixed;inset:0;z-index:50;background:rgba(5,5,5,.96);display:grid;grid-template-rows:minmax(0,1fr) auto;place-items:center;gap:14px;
   padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fun .35s}
@@ -281,8 +291,13 @@ Proceso</span><button class="plegar" aria-label="Plegar o desplegar">−</button
   </section>
   <section class="marco" id="participa"><span class="nombre">Casting</span>
     <div class="llamadas">
-      <div class="casting" id="casting">
-        <h2>Casting</h2>
+      <div class="casting muro" id="casting">
+        <canvas class="muro-tv" id="murotv" aria-hidden="true"></canvas>
+        <div class="muro-osd" aria-hidden="true"><span>Muro de control</span><span id="murotc">00:00:00:00</span></div>
+        <div class="muro-banda">
+        <span class="mano">Casting · Galicia</span>
+        <h2>¿El tuyo?</h2>
+        <p class="muro-cuenta"><b id="muron">31</b> <span id="murotx">pantallas encendidas · buscando rostros</span></p>
         <p>Buscamos modelos, mujeres y hombres, para un fashion film distópico. Sin diálogos: cuerpo, gesto y ropa. Rodaje en Galicia.</p>
         <ul class="ficha">
           <li><b>Perfil</b><span>+18 · complexión delgada · altura media-alta</span></li>
@@ -300,6 +315,7 @@ Proceso</span><button class="plegar" aria-label="Plegar o desplegar">−</button
           <button class="boton" id="bcast" type="submit">Enviar</button>
         </form>
         <p class="mano">Solo nosotros vemos las inscripciones. Nunca pedimos datos ni fotos por mensaje.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -311,7 +327,7 @@ Proceso</span><button class="plegar" aria-label="Plegar o desplegar">−</button
   <div class="pie"><button id="vant">← anterior</button><span id="vtxt"></span><button id="vsig">siguiente →</button><button id="vcer">cerrar ✕</button></div>
 </div>
 
-<script type="application/json" id="datos">{"marcos": [], "propio": [], "actualizado": "26 oct", "guion": {"propuesta": {"escenas": [["Pasividad", "", "", ""], ["Poder", "", "", ""], ["Control", "", "", ""], ["Distracción", "", "", ""], ["Discordia", "", "", ""], ["Fractura", "", "", ""]]}}, "desglose": [], "form_casting": "", "casting_envio": "perdidadelalma@proton.me", "modo": "publico"}</script>
+<script type="application/json" id="datos">{"marcos": [], "propio": [], "actualizado": "27 oct", "guion": {"propuesta": {"escenas": [["Pasividad", "", "", ""], ["Poder", "", "", ""], ["Control", "", "", ""], ["Distracción", "", "", ""], ["Discordia", "", "", ""], ["Fractura", "", "", ""]]}}, "desglose": [], "form_casting": "", "casting_envio": "perdidadelalma@proton.me", "modo": "publico"}</script>
 <script>
 const D = JSON.parse(document.getElementById("datos").textContent);
 // ancho de la barra de scroll, para que lo de «a todo el ancho» no se corte por un lado
@@ -360,8 +376,57 @@ const pon = (el, url, txt) => { if (url) el.href = url; else { el.setAttribute("
       const j = await r.json().catch(() => ({}));
       if (!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status);
       f.classList.add("enviado"); av.textContent = "Recibido. Si encajas, te escribimos por Instagram.";
+      window.muroRecibido && window.muroRecibido();
     } catch { b.disabled = false; av.textContent = "No se ha podido enviar. Prueba otra vez en un rato."; }
   });
+})();
+// muro de teles del casting (como el reel «Pantallas vacías»): 31 pantallas con estática que se apagan con SIN ROSTRO;
+// al rellenar el formulario se vuelven a encender y al enviarlo todas dicen ROSTRO RECIBIDO
+(() => {
+  const cv = $("#murotv"); if (!cv) return;
+  const cx = cv.getContext("2d"), N = 31, lento = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const orden = [...Array(N).keys()].sort(() => Math.random() - .5);
+  const ruido = document.createElement("canvas"); ruido.width = 64; ruido.height = 48;
+  const rx = ruido.getContext("2d"), img = rx.createImageData(64, 48);
+  let apagadas = 0, encendidas = 0, recibido = false, t0 = performance.now(), visible = false, pant = [];
+  const medir = () => {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = r.width * dpr; cv.height = r.height * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cols = Math.max(3, Math.round(r.width / 190)), filas = Math.ceil(N / cols), gw = r.width / cols, gh = r.height / filas;
+    pant = [...Array(N).keys()].map(i => ({x: (i % cols) * gw + 8, y: Math.floor(i / cols) * gh + 10, w: gw - 16, h: gh - 20}));
+  };
+  const estatica = () => { const d = img.data; for (let i = 0; i < d.length; i += 4) { const v = Math.random() * 190; d[i] = v * .64; d[i + 1] = v * .7; d[i + 2] = v * .73; d[i + 3] = 255; } rx.putImageData(img, 0, 0); };
+  const tc = s => [0, Math.floor(s / 60), Math.floor(s % 60), Math.floor((s * 30) % 30)].map(n => String(n).padStart(2, "0")).join(":");
+  const dibujar = now => {
+    const s = (now - t0) / 1000;
+    if (!recibido) apagadas = Math.min(N, Math.floor(Math.max(0, s - .6) / 4 * N) + (lento ? N : 0));
+    estatica();
+    cx.fillStyle = "#05090a"; cx.fillRect(0, 0, cv.width, cv.height);
+    pant.forEach((p, k) => {
+      const i = orden.indexOf(k), viva = recibido || i >= apagadas || i < encendidas;
+      cx.fillStyle = "#141b1d"; cx.beginPath(); cx.roundRect(p.x - 6, p.y - 6, p.w + 12, p.h + 12, 16); cx.fill();
+      cx.save(); cx.beginPath(); cx.roundRect(p.x, p.y, p.w, p.h, 12); cx.clip();
+      if (viva) { cx.globalAlpha = recibido ? .9 : .75; cx.drawImage(ruido, Math.random() * 8, Math.random() * 8, 48, 36, p.x, p.y, p.w, p.h); cx.globalAlpha = 1; }
+      else { cx.fillStyle = "#0e1516"; cx.fillRect(p.x, p.y, p.w, p.h); }
+      cx.fillStyle = "rgba(0,0,0,.25)"; for (let y = p.y; y < p.y + p.h; y += 3) cx.fillRect(p.x, y, p.w, 1);
+      cx.restore();
+      cx.font = "500 9px 'IBM Plex Mono',monospace"; cx.fillStyle = "rgba(164,180,186,.5)"; cx.fillText("CH-" + String(k + 1).padStart(2, "0"), p.x + 8, p.y + 14);
+      const rot = recibido ? "ROSTRO RECIBIDO" : (!viva ? "SIN ROSTRO" : "");
+      if (rot) { cx.font = "500 11px 'IBM Plex Mono',monospace"; cx.fillStyle = recibido ? "#4fe3f0" : "rgba(164,180,186,.8)"; const w = cx.measureText(rot).width; cx.fillText(rot, p.x + (p.w - w) / 2, p.y + p.h / 2 + 4); }
+    });
+    const quedan = recibido ? N : Math.max(N - apagadas, encendidas);
+    $("#muron").textContent = String(quedan).padStart(2, "0");
+    $("#murotx").textContent = recibido ? "rostros · el tuyo ya está dentro" : apagadas >= N && !encendidas ? "pantallas · ningún rostro" : encendidas ? "pantallas · alguien está entrando" : "pantallas encendidas · buscando rostros";
+    $("#murotc").textContent = tc(s);
+    if (visible && !lento) requestAnimationFrame(dibujar);
+  };
+  // rellenar el formulario enciende pantallas
+  const f = $("#fcast");
+  f && f.addEventListener("input", () => { const v = Object.fromEntries(new FormData(f)); const llenos = ["nombre", "instagram", "edad", "ciudad", "acepto"].filter(k => (v[k] || "").toString().trim()).length; encendidas = Math.round(llenos / 5 * (N - 1)); if (lento) dibujar(performance.now()); });
+  window.muroRecibido = () => { recibido = true; if (lento) dibujar(performance.now()); };
+  medir(); addEventListener("resize", () => { medir(); if (lento) dibujar(performance.now()); });
+  new IntersectionObserver(es => es.forEach(e => { const antes = visible; visible = e.isIntersecting; if (visible && !antes) { if (!apagadas) t0 = performance.now(); requestAnimationFrame(dibujar); } })).observe(cv);
+  dibujar(performance.now());
 })();
 $("#pie").textContent = D.modo === "publico" ? "Pérdida del alma · fashion film · trabajo de fin de grado" : "Copiado del Miro y del tablero de trabajo el " + D.actualizado;
 
