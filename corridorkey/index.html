@@ -173,6 +173,17 @@ td.esc{font:400 22px var(--mono);text-transform:uppercase;color:var(--rojo)}
 .inscripcion .boton:disabled{background:var(--junta);color:var(--ceniza);cursor:default}
 .inscripcion.enviado label,.inscripcion.enviado .boton{display:none}
 @media (max-width:560px){.inscripcion label.corto{grid-column:1/-1}}
+/* casting como el reel «Pantallas vacías»: muro de teles que se encienden y apagan detrás; el texto, a la izquierda sobre un degradado */
+.casting.muro{position:relative;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,110px) clamp(16px,4vw,56px);background:#05090a!important;box-shadow:inset 0 3px 0 var(--rojo)}
+.muro-tv{position:absolute;inset:0;width:100%;height:100%;z-index:-2;display:block}
+.casting.muro::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(5,9,10,.97) 0%,rgba(5,9,10,.93) 38%,rgba(5,9,10,.55) 62%,rgba(5,9,10,.1) 100%)}
+.muro-osd{position:absolute;top:14px;left:clamp(16px,4vw,56px);right:18px;display:flex;justify-content:space-between;font:500 11px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--niebla);opacity:.75;pointer-events:none}
+.muro-banda{max-width:640px}
+.muro h2{margin:12px 0 8px}
+.muro-cuenta{display:flex;align-items:baseline;gap:14px;margin:0 0 20px;font:500 12px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--ceniza)}
+.muro-cuenta b{font:400 clamp(48px,7vw,80px)/1 var(--mono);color:var(--hueso);min-width:2ch}
+@media (max-width:820px){.casting.muro::before{background:rgba(5,9,10,.84)}}
 
 .visor{position:fixed;inset:0;z-index:50;background:rgba(5,5,5,.96);display:grid;grid-template-rows:minmax(0,1fr) auto;place-items:center;gap:14px;
   padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fun .35s}
@@ -307,7 +318,7 @@ figure.grande figcaption{font:500 10px var(--dato);letter-spacing:.12em;text-tra
   </header>
 
   <section class="marco" id="que-es"><span class="nombre">Qué es</span>
-    <div class="cab"><h2>Señal limpia</h2><span class="mano">Versión 0.3.0 · 26 oct 2026 · Blender 4.2 a 5.0</span></div>
+    <div class="cab"><h2>Señal limpia</h2><span class="mano">Versión 0.3.0 · 27 oct 2026 · Blender 4.2 a 5.0</span></div>
     <p>CorridorKey para Blender lleva dentro de Blender el modelo <a href="https://github.com/nikopueringer/CorridorKey2.0" target="_blank" rel="noopener">CorridorKey 2.0</a> de Corridor Digital. No busca un color como un croma clásico: predice la transparencia del sujeto y su color ya sin el verde rebotado en el pelo y la piel. El addon lo instala, lo lanza en segundo plano y devuelve el recorte a su sitio.</p>
     <div class="notas" style="margin-top:28px">
       <div class="posit" style="max-width:360px">Línea de tiempo<small>Recorta la tira del editor de secuencias y la pone encima del original con Alpha Over.</small></div>
@@ -316,6 +327,12 @@ figure.grande figcaption{font:500 10px var(--dato);letter-spacing:.12em;text-tra
     </div>
     <figure class="grande"><img src="img/antes_despues.jpg" alt="Antes: la modelo en el plató de croma. Después: recortada sobre la ciudad de Pérdida del Alma" loading="lazy">
       <figcaption>Antes y después · recorte real en Blender con una RTX 3050 de 6 GB · 1080p</figcaption></figure>
+  </section>
+
+  <section class="marco" id="reel"><span class="nombre">Reel</span>
+    <div class="cab"><h2>En un minuto</h2><span class="mano">El reel de <a href="https://www.instagram.com/perdidadelalma/" target="_blank" rel="noopener">@perdidadelalma</a></span></div>
+    <video src="reel.mp4" poster="reel.jpg" controls playsinline preload="none"
+           style="display:block;width:100%;max-width:380px;aspect-ratio:9/16;margin:0 auto;background:#000;border-radius:6px"></video>
   </section>
 
   <section class="marco" id="descarga"><span class="nombre">Descarga</span>
@@ -412,7 +429,7 @@ figure.grande figcaption{font:500 10px var(--dato);letter-spacing:.12em;text-tra
     <p>Addon, interfaz e imagen: Toniño, para <i>Pérdida del Alma</i> (<a href="https://www.instagram.com/perdidadelalma/" target="_blank" rel="noopener">@perdidadelalma</a>). Modelo CorridorKey 2.0: Zachary Harris y Corridor Digital, con licencia propia: uso libre, también comercial, pero no se puede vender ni ofrecer como servicio de pago, y lo que se publique debe mantener el nombre CorridorKey. El addon es GPL-3.0.</p>
   </section>
 
-  <p class="pie-final">Pérdida del Alma · CorridorKey para Blender 0.3.0 · actualizado 26 oct 2026</p>
+  <p class="pie-final">Pérdida del Alma · CorridorKey para Blender 0.3.0 · actualizado 27 oct 2026</p>
 </div>
 <script>
 /* Para descargar, primero seguir @perdidadelalma en Instagram. La web no puede comprobarlo
