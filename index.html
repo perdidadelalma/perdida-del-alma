@@ -171,16 +171,17 @@ td.esc{font:400 22px var(--mono);text-transform:uppercase;color:var(--rojo)}
 .inscripcion .boton:disabled{background:var(--junta);color:var(--ceniza);cursor:default}
 .inscripcion.enviado label,.inscripcion.enviado .boton{display:none}
 @media (max-width:560px){.inscripcion label.corto{grid-column:1/-1}}
-/* casting como el reel «Pantallas vacías»: muro de teles detrás y una banda oscura delante */
-@font-face{font-family:"Perdida Senal";src:url("fuentes/PerdidaSenal.ttf") format("truetype");font-display:swap}
-.casting.muro{position:relative;overflow:hidden;isolation:isolate;padding:clamp(60px,9vw,120px) clamp(12px,4vw,56px);background:#05090a!important;box-shadow:inset 0 3px 0 var(--rojo)}
-.muro-tv{position:absolute;inset:0;width:100%;height:100%;z-index:-1;display:block}
-.muro-osd{position:absolute;top:14px;left:18px;right:18px;display:flex;justify-content:space-between;font:500 11px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--niebla);opacity:.75;pointer-events:none}
-.muro-banda{max-width:780px;margin:0 auto;background:rgba(6,10,11,.9);padding:clamp(22px,4vw,44px);box-shadow:0 0 0 1px var(--junta),0 30px 80px rgba(0,0,0,.6);backdrop-filter:blur(2px)}
-.muro h2{font-family:"Perdida Senal",var(--mono);font-size:clamp(64px,12vw,150px);line-height:.95;letter-spacing:.02em;margin:10px 0 6px}
-.muro-cuenta{display:flex;align-items:baseline;gap:14px;margin:0 0 18px;font:500 12px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--ceniza)}
-.muro-cuenta b{font:400 clamp(54px,8vw,92px)/1 "Perdida Senal",var(--mono);color:var(--hueso);min-width:2ch}
-.muro .inscripcion .boton{font-family:"Perdida Senal",var(--mono);letter-spacing:.06em}
+/* casting como el reel «Pantallas vacías»: muro de teles que se encienden y apagan detrás; el texto, a la izquierda sobre un degradado */
+.casting.muro{position:relative;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,110px) clamp(16px,4vw,56px);background:#05090a!important;box-shadow:inset 0 3px 0 var(--rojo)}
+.muro-tv{position:absolute;inset:0;width:100%;height:100%;z-index:-2;display:block}
+.casting.muro::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(5,9,10,.97) 0%,rgba(5,9,10,.93) 38%,rgba(5,9,10,.55) 62%,rgba(5,9,10,.1) 100%)}
+.muro-osd{position:absolute;top:14px;left:clamp(16px,4vw,56px);right:18px;display:flex;justify-content:space-between;font:500 11px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--niebla);opacity:.75;pointer-events:none}
+.muro-banda{max-width:640px}
+.muro h2{margin:12px 0 8px}
+.muro-cuenta{display:flex;align-items:baseline;gap:14px;margin:0 0 20px;font:500 12px var(--dato);letter-spacing:.14em;text-transform:uppercase;color:var(--ceniza)}
+.muro-cuenta b{font:400 clamp(48px,7vw,80px)/1 var(--mono);color:var(--hueso);min-width:2ch}
+@media (max-width:820px){.casting.muro::before{background:rgba(5,9,10,.84)}}
 
 .visor{position:fixed;inset:0;z-index:50;background:rgba(5,5,5,.96);display:grid;grid-template-rows:minmax(0,1fr) auto;place-items:center;gap:14px;
   padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fun .35s}
@@ -284,7 +285,7 @@ Proceso</span><button class="plegar" aria-label="Plegar o desplegar">−</button
   <section class="marco" id="proyecto"><span class="nombre">El proyecto</span>
     <div class="cab"><h2>Sin palabras</h2><span class="mano">Fashion film · trabajo de fin de grado · 2026</span></div>
     <div class="notas">
-      <div class="posit" style="max-width:360px">Una ciudad<small>Hormigón, niebla y luces de neón. Construida en 3D y llevada a imagen real con inteligencia artificial.</small></div>
+      <div class="posit" style="max-width:360px">Una ciudad<small>Hormigón, niebla y luces de neón. Una ciudad que nunca existió, construida para el film.</small></div>
       <div class="posit cian" style="max-width:360px">Un cuerpo<small>Seis escenas, seis estados de una misma persona. La ropa cuenta lo que no se dice.</small></div>
       <div class="posit rosa" style="max-width:360px">Una mirada<small>Moda, arquitectura brutalista y cine distópico en tres minutos.</small></div>
     </div>
@@ -380,15 +381,16 @@ const pon = (el, url, txt) => { if (url) el.href = url; else { el.setAttribute("
     } catch { b.disabled = false; av.textContent = "No se ha podido enviar. Prueba otra vez en un rato."; }
   });
 })();
-// muro de teles del casting (como el reel «Pantallas vacías»): 31 pantallas con estática que se apagan con SIN ROSTRO;
-// al rellenar el formulario se vuelven a encender y al enviarlo todas dicen ROSTRO RECIBIDO
+// muro de teles del casting (como el reel «Pantallas vacías»): 31 pantallas que se encienden y se apagan al azar, cada una a su ritmo;
+// al rellenar el formulario se encienden más y al enviarlo todas dicen ROSTRO RECIBIDO
 (() => {
   const cv = $("#murotv"); if (!cv) return;
   const cx = cv.getContext("2d"), N = 31, lento = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const orden = [...Array(N).keys()].sort(() => Math.random() - .5);
   const ruido = document.createElement("canvas"); ruido.width = 64; ruido.height = 48;
   const rx = ruido.getContext("2d"), img = rx.createImageData(64, 48);
-  let apagadas = 0, encendidas = 0, recibido = false, t0 = performance.now(), visible = false, pant = [];
+  const azar = (a, b) => a + Math.random() * (b - a);
+  let lleno = 0, recibido = false, t0 = performance.now(), visible = false, pant = [];
+  const tele = [...Array(N)].map(() => ({on: Math.random() < .4, prox: azar(200, 3000), parpadeo: 0}));
   const medir = () => {
     const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
     cv.width = r.width * dpr; cv.height = r.height * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -398,34 +400,34 @@ const pon = (el, url, txt) => { if (url) el.href = url; else { el.setAttribute("
   const estatica = () => { const d = img.data; for (let i = 0; i < d.length; i += 4) { const v = Math.random() * 190; d[i] = v * .64; d[i + 1] = v * .7; d[i + 2] = v * .73; d[i + 3] = 255; } rx.putImageData(img, 0, 0); };
   const tc = s => [0, Math.floor(s / 60), Math.floor(s % 60), Math.floor((s * 30) % 30)].map(n => String(n).padStart(2, "0")).join(":");
   const dibujar = now => {
-    const s = (now - t0) / 1000;
-    if (!recibido) apagadas = Math.min(N, Math.floor(Math.max(0, s - .6) / 4 * N) + (lento ? N : 0));
+    const s = (now - t0) / 1000, pOn = .3 + .6 * lleno;      // cuanto más relleno el formulario, más teles encendidas
+    tele.forEach(t => { if (now - t0 > t.prox) { const antes = t.on; t.on = recibido || Math.random() < pOn; if (t.on && !antes) t.parpadeo = now + 260;
+      t.prox = now - t0 + (t.on ? azar(700, 4200) : azar(400, 3000)); } });
     estatica();
     cx.fillStyle = "#05090a"; cx.fillRect(0, 0, cv.width, cv.height);
     pant.forEach((p, k) => {
-      const i = orden.indexOf(k), viva = recibido || i >= apagadas || i < encendidas;
+      const t = tele[k], viva = recibido || t.on, parp = now < t.parpadeo && Math.random() < .5;
       cx.fillStyle = "#141b1d"; cx.beginPath(); cx.roundRect(p.x - 6, p.y - 6, p.w + 12, p.h + 12, 16); cx.fill();
       cx.save(); cx.beginPath(); cx.roundRect(p.x, p.y, p.w, p.h, 12); cx.clip();
-      if (viva) { cx.globalAlpha = recibido ? .9 : .75; cx.drawImage(ruido, Math.random() * 8, Math.random() * 8, 48, 36, p.x, p.y, p.w, p.h); cx.globalAlpha = 1; }
-      else { cx.fillStyle = "#0e1516"; cx.fillRect(p.x, p.y, p.w, p.h); }
+      if (viva && !parp) { cx.globalAlpha = recibido ? .9 : .72; cx.drawImage(ruido, Math.random() * 8, Math.random() * 8, 48, 36, p.x, p.y, p.w, p.h); cx.globalAlpha = 1; }
+      else { cx.fillStyle = parp ? "#2a3a3d" : "#0e1516"; cx.fillRect(p.x, p.y, p.w, p.h); }
       cx.fillStyle = "rgba(0,0,0,.25)"; for (let y = p.y; y < p.y + p.h; y += 3) cx.fillRect(p.x, y, p.w, 1);
       cx.restore();
       cx.font = "500 9px 'IBM Plex Mono',monospace"; cx.fillStyle = "rgba(164,180,186,.5)"; cx.fillText("CH-" + String(k + 1).padStart(2, "0"), p.x + 8, p.y + 14);
       const rot = recibido ? "ROSTRO RECIBIDO" : (!viva ? "SIN ROSTRO" : "");
       if (rot) { cx.font = "500 11px 'IBM Plex Mono',monospace"; cx.fillStyle = recibido ? "#4fe3f0" : "rgba(164,180,186,.8)"; const w = cx.measureText(rot).width; cx.fillText(rot, p.x + (p.w - w) / 2, p.y + p.h / 2 + 4); }
     });
-    const quedan = recibido ? N : Math.max(N - apagadas, encendidas);
-    $("#muron").textContent = String(quedan).padStart(2, "0");
-    $("#murotx").textContent = recibido ? "rostros · el tuyo ya está dentro" : apagadas >= N && !encendidas ? "pantallas · ningún rostro" : encendidas ? "pantallas · alguien está entrando" : "pantallas encendidas · buscando rostros";
+    const n = recibido ? N : tele.filter(t => t.on).length;
+    $("#muron").textContent = String(n).padStart(2, "0");
+    $("#murotx").textContent = recibido ? "rostros · el tuyo ya está dentro" : lleno ? "pantallas · alguien está entrando" : "pantallas encendidas · buscando rostros";
     $("#murotc").textContent = tc(s);
     if (visible && !lento) requestAnimationFrame(dibujar);
   };
-  // rellenar el formulario enciende pantallas
   const f = $("#fcast");
-  f && f.addEventListener("input", () => { const v = Object.fromEntries(new FormData(f)); const llenos = ["nombre", "instagram", "edad", "ciudad", "acepto"].filter(k => (v[k] || "").toString().trim()).length; encendidas = Math.round(llenos / 5 * (N - 1)); if (lento) dibujar(performance.now()); });
-  window.muroRecibido = () => { recibido = true; if (lento) dibujar(performance.now()); };
+  f && f.addEventListener("input", () => { const v = Object.fromEntries(new FormData(f)); lleno = ["nombre", "instagram", "edad", "ciudad", "acepto"].filter(k => (v[k] || "").toString().trim()).length / 5; if (lento) dibujar(performance.now()); });
+  window.muroRecibido = () => { recibido = true; tele.forEach(t => { t.on = true; }); if (lento) dibujar(performance.now()); };
   medir(); addEventListener("resize", () => { medir(); if (lento) dibujar(performance.now()); });
-  new IntersectionObserver(es => es.forEach(e => { const antes = visible; visible = e.isIntersecting; if (visible && !antes) { if (!apagadas) t0 = performance.now(); requestAnimationFrame(dibujar); } })).observe(cv);
+  new IntersectionObserver(es => es.forEach(e => { const antes = visible; visible = e.isIntersecting; if (visible && !antes && !lento) requestAnimationFrame(dibujar); })).observe(cv);
   dibujar(performance.now());
 })();
 $("#pie").textContent = D.modo === "publico" ? "Pérdida del alma · fashion film · trabajo de fin de grado" : "Copiado del Miro y del tablero de trabajo el " + D.actualizado;
